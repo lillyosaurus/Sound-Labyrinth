@@ -1,23 +1,24 @@
 import pygame
+import game_object
 
 def sample_map():
     """
     Sample map for the game
     """
     map_matrix = [
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-        [0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0],
-        [0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0],
-        [0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0],
-        [0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0],
-        [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        [0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0],
+        [0, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2],
+        [0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+        [0, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2],
+        [0, 0, 0, 2, 1, 1, 1, 1, 1, 2, 0],
+        [0, 2, 2, 2, 2, 2, 2, 2, 1, 2, 0],
+        [0, 2, 1, 2, 0, 0, 0, 2, 1, 2, 0],
+        [0, 2, 1, 2, 0, 0, 0, 2, 1, 2, 0],
+        [0, 2, 1, 2, 2, 2, 2, 2, 1, 2, 0],
+        [0, 2, 1, 1, 1, 1, 1, 1, 1, 2, 0],
+        [0, 2, 2, 2, 2, 1, 2, 2, 2, 2, 0],
+        [0, 0, 0, 0, 2, 1, 2, 0, 0, 0, 0],
+        [0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0]
     ]
 
     return map_matrix
@@ -32,9 +33,23 @@ class GameMap():
         current_map: map depicted as nested list
         """
         # map of the game in matrix form.
-        self.map = sample_map
-        self.wall = self.get_wall_location()
+        self.map = current_map
+        self.pixel_size = 64
+        self.wall_list = self.get_walls()
         #self.player = 
 
-    def get_wall_location(self):
+    def get_walls(self):
+        x = 0
+        y = 0
+        walls = []
+        for row in self.map:
+            for column in row:
+                if column == 2:
+                    wall = game_object.Wall(x,y)
+                    wall.scale_image(self.pixel_size)
+                    walls.append(wall)
+                x += self.pixel_size
+            x = 0
+            y += self.pixel_size
         
+        return walls

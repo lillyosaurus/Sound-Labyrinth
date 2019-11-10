@@ -5,9 +5,8 @@ class View():
     """Drawing Class for the game"""
 
     def __init__(self, gamemap):
-        self.pixel_size = 64
-        self.width = self.pixel_size * 7
-        self.height = self.pixel_size * 7
+        self.width = gamemap.pixel_size * 7
+        self.height = gamemap.pixel_size * 7
 
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("Sound Labyrinth")
@@ -22,7 +21,8 @@ class View():
         pygame.display.flip()
     
     def draw_screen(self):
-        offset = 1
+        for wall in self.map.wall_list:
+            wall.draw(self.screen)
 
     def close_screen(self):
         for event in pygame.event.get():
