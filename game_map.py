@@ -1,6 +1,4 @@
 import pygame
-import os
-import copy
 
 def sample_map():
     """
@@ -29,10 +27,14 @@ class GameMap():
 
     def __init__(self, current_map=sample_map()):
         """
-        Initializes PacMap object
+        Initializes GameMap object
 
-        screen: pygame.Surface object, screen of the current game
         current_map: map depicted as nested list
         """
-        # map of the game in matrix form. 0 is wall, 1 is small dot, 2 is big dot, 3 is empty
+        # map of the game in matrix form.
         self.map = sample_map
+        self.wall = self.get_wall_location()
+        #self.player = 
+
+    def get_wall_location(self):
+        
