@@ -15,7 +15,7 @@ def sample_map():
         [0, 2, 1, 2, 0, 0, 0, 2, 1, 2, 0],
         [0, 2, 1, 2, 0, 0, 0, 2, 1, 2, 0],
         [0, 2, 1, 2, 2, 2, 2, 2, 1, 2, 0],
-        [0, 2, 1, 1, 1, 1, 1, 1, 1, 2, 0],
+        [0, 2, 1, 1, 1, 3, 1, 1, 1, 2, 0],
         [0, 2, 2, 2, 2, 1, 2, 2, 2, 2, 0],
         [0, 0, 0, 0, 2, 1, 2, 0, 0, 0, 0],
         [0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0]
@@ -36,7 +36,7 @@ class GameMap():
         self.map = current_map
         self.pixel_size = 64
         self.wall_list = self.get_walls()
-        #self.player = 
+        self.player = self.get_player()
 
     def get_walls(self):
         x = 0
@@ -53,3 +53,17 @@ class GameMap():
             y += self.pixel_size
         
         return walls
+    
+    def get_player(self):
+        x = 0
+        y = 0
+        for row in self.map:
+            for column in row:
+                if column == 3:
+                    player = game_object.Player(x,y)
+                    player.scale_image(self.pixel_size)
+                x += self.pixel_size
+            x = 0
+            y += self.pixel_size
+        
+        return player
