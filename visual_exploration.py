@@ -1,15 +1,16 @@
 import pygame
-import view
+import visual
 import game_map
 import game_object
 
 pygame.init()
 current_map = game_map.GameMap()
-visual_view = view.View(current_map)
+visual_view = visual.View(current_map)
 
 while(visual_view.on == True):
 
     keys = pygame.key.get_pressed()
+    print(current_map.wall_list[0].rect.size)
     if keys[pygame.K_UP]:
             current_map.player.rect.move_ip(0,-1)
     if keys[pygame.K_DOWN]:
