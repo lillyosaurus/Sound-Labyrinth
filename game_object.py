@@ -26,6 +26,7 @@ class GameObject(pygame.sprite.Sprite):
     
     def scale_image(self, new_size):
         self.image = pygame.transform.scale(self.image, (new_size, new_size))
+        self.rect.size = (new_size, new_size)
 
 class Wall(GameObject):
 
