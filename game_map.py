@@ -35,8 +35,10 @@ class GameMap():
         # map of the game in matrix form.
         self.map = current_map
         self.pixel_size = 64
+        self.wall_group = pygame.sprite.Group()
         self.wall_list = self.get_walls()
         self.player = self.get_player()
+        
 
     def get_walls(self):
         x = 0
@@ -47,6 +49,7 @@ class GameMap():
                 if column == 2:
                     wall = game_object.Wall(x,y)
                     wall.scale_image(self.pixel_size)
+                    self.wall_group.add(wall)
                     walls.append(wall)
                 x += self.pixel_size
             x = 0
@@ -67,3 +70,7 @@ class GameMap():
             y += self.pixel_size
         
         return player
+    
+    def player_wall_collision(self):
+        collision_list = pygame.sprite.spritecollideany(self.player, self.wall_group)
+        return collision_list
