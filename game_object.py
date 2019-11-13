@@ -28,6 +28,10 @@ class GameObject(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (new_size, new_size))
         self.rect.size = (new_size, new_size)
 
+    def collision_group(self, group):
+        collision_list = pygame.sprite.spritecollideany(self, group)
+        return collision_list
+
 class Wall(GameObject):
 
     def __init__(self, x, y):
@@ -47,3 +51,14 @@ class Player(GameObject):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+
+class Ping(GameObject):
+
+    def __init__(self, player):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.Surface([1, 1])
+        # self.image.fill(color)
+        self.rect = self.image.get_rect()
+        self.rect.x = player.rect.center[0]
+        self.rect.y = player.rect.center[1]
+

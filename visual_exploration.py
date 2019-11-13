@@ -10,7 +10,6 @@ visual_view = visual.View(current_map)
 while(visual_view.on == True):
 
     keys = pygame.key.get_pressed()
-    print(current_map.wall_list[0].rect.size)
     if keys[pygame.K_UP]:
         current_map.player.rect.move_ip(0,-1)
         if current_map.player_wall_collision() != None:
@@ -27,8 +26,18 @@ while(visual_view.on == True):
         current_map.player.rect.move_ip(1,0)
         if current_map.player_wall_collision() != None:
                 current_map.player.rect.move_ip(-1,0)
+        
 
-    print(current_map.player_wall_collision())
+    if keys[pygame.K_w]:
+        print(current_map.ping_from_player('up',3))
+    if keys[pygame.K_d]:
+        print(current_map.ping_from_player('right',3))
+    if keys[pygame.K_a]:
+        print(current_map.ping_from_player('left',3))
+    if keys[pygame.K_s]:
+        print(current_map.ping_from_player('down',3))
+
+    
     visual_view.clear_screen()
     visual_view.draw_screen()
     visual_view.close_screen()
