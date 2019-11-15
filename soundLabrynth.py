@@ -1,9 +1,5 @@
 import model
 
-m = model.Model()
-
-
-
-
 if __name__ == '__main__':
-    #rungame()
+    m = model.Model()
+    m.run_game()

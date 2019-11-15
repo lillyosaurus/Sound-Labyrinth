@@ -10,13 +10,13 @@ class Model:
 
     def __init__(self):
         self.current_map = gm.GameMap()
-        self.visual_view = visual.VisualView(self.current_map)
+        self.view = view.View(self.current_map)
         self.controller = c.Controller()
 
     def run_game(self):
         pygame.init()
 
-        while(self.visual_view.on == True):
+        while(self.view.on == True):
             self.controller.read_input()
 
             #process controller inputs for moving
@@ -46,11 +46,7 @@ class Model:
             if self.controller.ping_keys['back']:
                 print(self.current_map.ping_from_player('down',3))
 
-
-            self.visual_view.clear_screen()
-            self.visual_view.draw_screen()
-            self.visual_view.close_screen()
-            self.visual_view.refresh_screen()
+            self.view.update_screen()
 
 
 if __name__ == "__main__":
