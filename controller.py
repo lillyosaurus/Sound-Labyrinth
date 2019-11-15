@@ -18,17 +18,17 @@ class Controller:
         input for the given inventory slot.
     """
 
-    def __init__():
+    def __init__(self):
         """Initalize the Controller class with default variable values"""
 
         #variables to store the states of the controll keys
         #values are true while the key is pressed and false when the key is not
-        ping_keys = {'front':False,'back':False,'left':False,'right':False}
-        move_keys = {'north':False,'south':False,'west':False,'east':False}
-        inventory_keys = {'1':False,'2':False,'3':False,'4':False,'5':False}
+        self.ping_keys = {'front':False,'back':False,'left':False,'right':False}
+        self.move_keys = {'north':False,'south':False,'west':False,'east':False}
+        self.inventory_keys = {'1':False,'2':False,'3':False,'4':False,'5':False}
 
 
-    def read_input():
+    def read_input(self):
         """Read the inputs to the game
 
         The function will read inputs from the keyboard and will update the
@@ -41,23 +41,23 @@ class Controller:
 
 
         #get which keys are pressed
-        pressed_keys = pygame.key.getpressed()
+        pressed_keys = pygame.key.get_pressed()
 
         #update the values of the ping controlling keys
-        ping_keys['front'] = pressed_keys[pygame.K_UP]
-        ping_keys['back'] = pressed_keys[pygame.K_DOWN]
-        ping_keys['left'] = pressed_keys[pygame.K_LEFT]
-        ping_keys['right'] = pressed_keys[pygame.K_RIGHT]
+        self.ping_keys['front'] = pressed_keys[pygame.K_UP]
+        self.ping_keys['back'] = pressed_keys[pygame.K_DOWN]
+        self.ping_keys['left'] = pressed_keys[pygame.K_LEFT]
+        self.ping_keys['right'] = pressed_keys[pygame.K_RIGHT]
 
         #update the values of the movment controlling keys
-        move_keys['north'] = pressed_keys[pygame.K_w]
-        move_keys['south'] = pressed_keys[pygame.K_s]
-        move_keys['west'] = pressed_keys[pygame.K_a]
-        move_keys['east'] = pressed_keys[pygame.K_d]
+        self.move_keys['north'] = pressed_keys[pygame.K_w]
+        self.move_keys['south'] = pressed_keys[pygame.K_s]
+        self.move_keys['west'] = pressed_keys[pygame.K_a]
+        self.move_keys['east'] = pressed_keys[pygame.K_d]
 
         #update the values of the inventory slot controlling keys
-        inventory_keys['1'] = pressed_keys[pygame.K_1]
-        inventory_keys['2'] = pressed_keys[pygame.K_2]
-        inventory_keys['3'] = pressed_keys[pygame.K_3]
-        inventory_keys['4'] = pressed_keys[pygame.K_4]
-        inventory_keys['5'] = pressed_keys[pygame.K_5]
+        self.inventory_keys['1'] = pressed_keys[pygame.K_1]
+        self.inventory_keys['2'] = pressed_keys[pygame.K_2]
+        self.inventory_keys['3'] = pressed_keys[pygame.K_3]
+        self.inventory_keys['4'] = pressed_keys[pygame.K_4]
+        self.inventory_keys['5'] = pressed_keys[pygame.K_5]

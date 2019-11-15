@@ -1,7 +1,7 @@
 import pygame
 import os
 
-class View():
+class VisualView():
     """Drawing Class for the game"""
 
     def __init__(self, gamemap):
@@ -16,10 +16,10 @@ class View():
 
     def clear_screen(self):
         self.screen.fill((0,0,0))
-    
+
     def refresh_screen(self):
         pygame.display.flip()
-    
+
     def draw_screen(self):
         x_offset = int(self.width/2) - self.map.player.rect.x - self.map.pixel_size/2
         y_offset = int(self.height/2) - self.map.player.rect.y - self.map.pixel_size/2
