@@ -17,9 +17,12 @@ class Model:
         self.controller = c.Controller()
         #self.audio = audio.Audio()
     def run_game(self):
-
+        clock = pygame.time.Clock()
         while(self.view.on == True):
-            self.controller.read_input()
+            clock.tick(300)
+            self.current_map.player.print_loaction()
+            if self.current_map.at_block() == True:
+                self.controller.read_input()
             count = 0
             #process controller inputs for moving
             if self.controller.move_keys['north']:
@@ -39,25 +42,26 @@ class Model:
                 if self.current_map.player_wall_collision() != None:
                         self.current_map.player.rect.move_ip(-1,0)
             #process controller inputs for pings
-            if self.controller.ping_keys['front']:
-                dist = self.current_map.ping_from_player('up',3)
-                if dist != None:
-                    self.view.play_echo(round(dist),'up', self.view.audio.hollow_sound)
-            if self.controller.ping_keys['right']:
-                dist = self.current_map.ping_from_player('right',3)
-                if dist != None and count == 0:
-                    print(count)
-                    count +=1
-                    print(count)
-                    self.view.play_echo(round(dist),'right', self.view.audio.hollow_sound)
-            if self.controller.ping_keys['left']:
-                dist = self.current_map.ping_from_player('left',3)
-                if dist != None:
-                    self.view.play_echo(round(dist),'right', self.view.audio.hollow_sound)
-            if self.controller.ping_keys['back']:
-                dist = self.current_map.ping_from_player('down',3)
-                if dist != None:
-                    self.view.play_echo(round(dist),'right', self.view.audio.hollow_sound)
+            if self.current_map.at_block() == True:
+                if self.controller.ping_keys['front']:
+                    dist = self.current_map.ping_from_player('up',3)
+                    if dist != None:
+                        self.view.play_echo(round(dist),'up', self.view.audio.hollow_sound)
+                if self.controller.ping_keys['right']:
+                    dist = self.current_map.ping_from_player('right',3)
+                    if dist != None and count == 0:
+                        print(count)
+                        count +=1
+                        print(count)
+                        self.view.play_echo(round(dist),'right', self.view.audio.hollow_sound)
+                if self.controller.ping_keys['left']:
+                    dist = self.current_map.ping_from_player('left',3)
+                    if dist != None:
+                        self.view.play_echo(round(dist),'right', self.view.audio.hollow_sound)
+                if self.controller.ping_keys['back']:
+                    dist = self.current_map.ping_from_player('down',3)
+                    if dist != None:
+                        self.view.play_echo(round(dist),'right', self.view.audio.hollow_sound)
 
             self.view.update_screen()
 

@@ -9,7 +9,7 @@ class GameObject(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
     
     def print_loaction(self):
-        print(self.rect.x)
+        print((self.rect.x, self.rect.y))
     
     def print_size(self):
         print(self.rect.size)
@@ -38,6 +38,7 @@ class Wall(GameObject):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(os.getcwd()+"/image/test_tile.png")
         self.image.set_colorkey((0,0,0))
+        self.image.set_alpha(100)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y

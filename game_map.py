@@ -102,3 +102,9 @@ class GameMap():
                 return blocks_away
 
         return None
+    
+    def at_block(self):
+        if self.player.rect.x % self.pixel_size == 0:
+            if self.player.rect.y % self.pixel_size == 0:
+                return True
+        return False
