@@ -8,13 +8,11 @@ class GameObject(pygame.sprite.Sprite):
         self.image = pygame.image.load(image)
         self.rect = self.image.get_rect()
 
-    def print_loaction(self):
-        #print((self.rect.x, self.rect.y))
-        pass
+    def location(self):
+        return(self.rect.x, self.rect.y)
 
-    def print_size(self):
-        #print(self.rect.size)
-        pass
+    def size(self):
+        return(self.rect.size)
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
@@ -36,6 +34,12 @@ class GameObject(pygame.sprite.Sprite):
     def collision_group(self, group):
         collision_list = pygame.sprite.spritecollideany(self, group)
         return collision_list
+
+    #TODO: implement
+    def show(self):
+        pass
+    def hide(self):
+        pass
 
 class Wall(GameObject):
 

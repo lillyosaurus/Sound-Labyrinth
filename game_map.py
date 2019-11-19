@@ -38,7 +38,7 @@ class GameMap():
         self.wall_group = pygame.sprite.Group()
         self.wall_list = self.get_walls()
         self.player = self.get_player()
-        
+
 
     def get_walls(self):
         x = 0
@@ -54,9 +54,9 @@ class GameMap():
                 x += self.pixel_size
             x = 0
             y += self.pixel_size
-        
+
         return walls
-    
+
     def get_player(self):
         x = 0
         y = 0
@@ -68,11 +68,13 @@ class GameMap():
                 x += self.pixel_size
             x = 0
             y += self.pixel_size
-        
+
         return player
-    
+
     def player_wall_collision(self):
         return self.player.collision_group(self.wall_group)
+
+    #TODO: return distance and wall hit
 
     def ping_from_player(self, direction, limit):
         ping = game_object.Ping(self.player)
@@ -87,7 +89,7 @@ class GameMap():
             x = 0
             y = 1
             offset = 1
-        elif direction == 'left':    
+        elif direction == 'left':
             x = -1
             y = 0
         elif direction == 'right':
@@ -104,7 +106,7 @@ class GameMap():
                 return blocks_away
 
         return None
-    
+
     def at_block(self):
         if self.player.rect.x % self.pixel_size == 0:
             if self.player.rect.y % self.pixel_size == 0:
