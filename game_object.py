@@ -24,6 +24,9 @@ class GameObject(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
     
+    def set_transparency(self, value):
+        self.image.set_alpha(value)
+
     def scale_image(self, new_size):
         self.image = pygame.transform.scale(self.image, (new_size, new_size))
         self.rect.size = (new_size, new_size)

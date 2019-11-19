@@ -97,8 +97,10 @@ class GameMap():
 
         for i in range(pixel_limit):
             ping.rect.move_ip(x, y)
-            if ping.collision_group(self.wall_group) != None:
+            ping_wall = ping.collision_group(self.wall_group)
+            if ping_wall != None:
                 blocks_away = (i + offset + self.pixel_size/2)/self.pixel_size
+                ping_wall.image.set_alpha(255)
                 return blocks_away
 
         return None

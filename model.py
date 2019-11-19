@@ -64,6 +64,8 @@ class Model:
                         self.view.play_echo(round(dist),'right', self.view.audio.hollow_sound)
 
             self.view.update_screen()
+            for walls in self.current_map.wall_list:
+                walls.image.set_alpha(1)
 
 
 if __name__ == "__main__":
