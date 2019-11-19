@@ -7,23 +7,25 @@ class GameObject(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(image)
         self.rect = self.image.get_rect()
-    
+
     def print_loaction(self):
-        print((self.rect.x, self.rect.y))
-    
+        #print((self.rect.x, self.rect.y))
+        pass
+
     def print_size(self):
-        print(self.rect.size)
-    
+        #print(self.rect.size)
+        pass
+
     def draw(self, screen):
         screen.blit(self.image, self.rect)
-    
+
     def draw_offset(self, screen, x, y):
         screen.blit(self.image, self.rect.move(x,y))
-    
+
     def set_position(self, x, y):
         self.rect.x = x
         self.rect.y = y
-    
+
     def set_transparency(self, value):
         self.image.set_alpha(value)
 
@@ -65,4 +67,3 @@ class Ping(GameObject):
         self.rect = self.image.get_rect()
         self.rect.x = player.rect.center[0]
         self.rect.y = player.rect.center[1]
-
