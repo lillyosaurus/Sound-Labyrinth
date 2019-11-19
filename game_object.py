@@ -35,11 +35,11 @@ class GameObject(pygame.sprite.Sprite):
         collision_list = pygame.sprite.spritecollideany(self, group)
         return collision_list
 
-    #TODO: implement
     def show(self):
-        pass
+        self.image.set_alpha(255)
+        
     def hide(self):
-        pass
+        self.image.set_alpha(0)
 
 class Wall(GameObject):
 
