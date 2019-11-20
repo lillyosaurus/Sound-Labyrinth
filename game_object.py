@@ -41,7 +41,7 @@ class GameObject(pygame.sprite.Sprite):
 
     def show(self):
         self.image.set_alpha(255)
-        
+
     def hide(self):
         self.image.set_alpha(0)
 
@@ -50,7 +50,10 @@ class Wall(GameObject):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load(os.getcwd()+"/image/wall.png")
+<<<<<<< HEAD
         self.image = pygame.transform.rotate(self.image, random.choice([0,90,180,270]))
+=======
+>>>>>>> 8988c9d99d818cffdf264b8e8019ba1d82ffa2b0
         self.image.set_colorkey((0,0,0))
         self.original_image = self.image
         self.set_transparency(10)
@@ -67,7 +70,11 @@ class Player(GameObject):
 
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
+<<<<<<< HEAD
         self.image = pygame.image.load(os.getcwd()+"/image/Player.png")
+=======
+        self.image = pygame.image.load(os.getcwd()+"/image/player.png")
+>>>>>>> 8988c9d99d818cffdf264b8e8019ba1d82ffa2b0
         self.image.set_colorkey((0,0,0))
         self.rect = self.image.get_rect()
         self.rect.x = x

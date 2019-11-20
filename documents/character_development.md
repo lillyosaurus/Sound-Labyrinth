@@ -1,9 +1,10 @@
 # Characters
 ## The fallen Ruler
 
-![A small spirit with a tall three pronged crown and a sad regretful look on ots face.] (../image/post_processed/NPC3.png)
+![A small spirit with a tall three pronged crown and a sad regretful look on its face.](/../image/NPC3.png)
 
 ### Description
+
 
 The creature sits in the middle of the room. Its two eyes seem to have a sad complexion to them. The long growths on top of its head resemble a crown crushing the creature and beating it wown. You can see that its spirit has given up and it is waiting out its torment.
 
