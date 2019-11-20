@@ -45,7 +45,7 @@ class Wall(GameObject):
 
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.getcwd()+"/image/post_processed/wall.png")
+        self.image = pygame.image.load(os.getcwd()+"/image/wall.png")
         self.image.set_colorkey((0,0,0))
         self.image.set_alpha(100)
         self.rect = self.image.get_rect()
@@ -56,7 +56,7 @@ class Player(GameObject):
 
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.getcwd()+"/image/post_processed/player.png")
+        self.image = pygame.image.load(os.getcwd()+"/image/player.png")
         self.image.set_colorkey((0,0,0))
         self.rect = self.image.get_rect()
         self.rect.x = x
