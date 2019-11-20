@@ -76,39 +76,35 @@ class Model:
                             self.view.play_echo(round(dist),'down', self.view.audio.hollow_sound)
 
             #process controller inputs for moving
+            speed = self.map.player.speed
             if self.controller.move_keys['north']:
 
                 #TODO: Extract to function in player
                 #player.move("direction")
-                self.map.player.rect.move_ip(0,-1)
+                self.map.player.rect.move_ip(0,-speed)
                 if self.map.player_wall_collision() != None:
-                        self.map.player.rect.move_ip(0,1)
+                        self.map.player.rect.move_ip(0,speed)
 
             elif self.controller.move_keys['south']:
 
-                self.map.player.rect.move_ip(0,1)
+                self.map.player.rect.move_ip(0,speed)
                 if self.map.player_wall_collision() != None:
-                        self.map.player.rect.move_ip(0,-1)
+                        self.map.player.rect.move_ip(0,-speed)
 
             elif self.controller.move_keys['west']:
 
-                self.map.player.rect.move_ip(-1,0)
+                self.map.player.rect.move_ip(-speed,0)
                 if self.map.player_wall_collision() != None:
-                        self.map.player.rect.move_ip(1,0)
+                        self.map.player.rect.move_ip(speed,0)
 
             elif self.controller.move_keys['east']:
 
-                self.map.player.rect.move_ip(1,0)
+                self.map.player.rect.move_ip(speed,0)
                 if self.map.player_wall_collision() != None:
-                        self.map.player.rect.move_ip(-1,0)
-
+                        self.map.player.rect.move_ip(-speed,0)
 
             #update visuals
             self.view.update_screen()
-
-            #hides and shows the proper walls
-            for walls in self.map.wall_list:
-                walls.image.set_alpha(1)
 
 
 if __name__ == "__main__":

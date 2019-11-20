@@ -34,10 +34,11 @@ class GameMap():
         """
         # map of the game in matrix form.
         self.map = current_map
-        self.pixel_size = 64
+        self.pixel_size = 128
         self.wall_group = pygame.sprite.Group()
         self.wall_list = self.get_walls()
         self.player = self.get_player()
+        self.player.speed = self.pixel_size/16
 
 
     def get_walls(self):
