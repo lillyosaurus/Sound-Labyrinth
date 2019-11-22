@@ -57,7 +57,7 @@ class Wall(GameObject):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-    
+
     def scale_image(self, new_size):
         self.image = pygame.transform.scale(self.image, (new_size, new_size))
         self.original_image = pygame.transform.scale(self.original_image, (new_size, new_size))
@@ -67,13 +67,13 @@ class Player(GameObject):
 
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.getcwd()+"/image/Player.png")
+        self.image = pygame.image.load(os.getcwd()+"/image/player.png")
         self.image.set_colorkey((0,0,0))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
         self.speed = 1
-    
+
     def move_player(self, direction):
         pass
 
