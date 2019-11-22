@@ -53,7 +53,7 @@ class Wall(GameObject):
         self.image = pygame.transform.rotate(self.image, random.choice([0,90,180,270]))
         self.image.set_colorkey((0,0,0))
         self.original_image = self.image
-        self.set_transparency(10)
+        self.set_transparency(1)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y

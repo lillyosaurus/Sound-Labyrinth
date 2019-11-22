@@ -26,6 +26,8 @@ class Model:
 
         #Stores which direction was just pinged so you cant ping twice in the same direction
         previous_ping = None
+        turned_on_wall = None
+        counter = 0
 
         while(self.view.on == True):
 
@@ -45,36 +47,45 @@ class Model:
                     #process_ping('direction',sight_range,clock)
                     #   do visual and audio only when allowed after 1 second
                     #   return None
-                    dist = self.map.ping_from_player('up',3)
+                    ping_check = self.map.ping_from_player('up',3)
+                    print(ping_check)
+                    dist = ping_check[1]
                     if previous_ping != 'up':
                         previous_ping = 'up'
                         if dist != None:
                             self.view.play_echo(round(dist),'up', self.view.audio.hollow_sound)
-
+                            turned_on_wall = ping_check[0]
+                            counter = 30
                 elif self.controller.ping_keys['right']:
 
-                    dist = self.map.ping_from_player('right',3)
+                    ping_check = self.map.ping_from_player('right',3)
+                    dist = ping_check[1]
                     if previous_ping != 'right':
                         previous_ping = 'right'
                         if dist != None:
                             self.view.play_echo(round(dist),'right', self.view.audio.hollow_sound)
-
+                            turned_on_wall = ping_check[0]
+                            counter = 30
                 elif self.controller.ping_keys['left']:
 
-                    dist = self.map.ping_from_player('left',3)
+                    ping_check = self.map.ping_from_player('left',3)
+                    dist = ping_check[1]
                     if previous_ping != 'left':
                         previous_ping = 'left'
                         if dist != None:
                             self.view.play_echo(round(dist),'left', self.view.audio.hollow_sound)
-
+                            turned_on_wall = ping_check[0]
+                            counter = 30
                 elif self.controller.ping_keys['back']:
 
-                    dist = self.map.ping_from_player('down',3)
+                    ping_check = self.map.ping_from_player('down',3)
+                    dist = ping_check[1]
                     if previous_ping != 'down':
                         previous_ping = 'down'
                         if dist != None:
                             self.view.play_echo(round(dist),'down', self.view.audio.hollow_sound)
-
+                            turned_on_wall = ping_check[0]
+                            counter = 30
             #process controller inputs for moving
             speed = self.map.player.speed
             if self.controller.move_keys['north']:
@@ -103,6 +114,9 @@ class Model:
                 if self.map.player_wall_collision() != None:
                         self.map.player.rect.move_ip(-speed,0)
 
+            if turned_on_wall != None and counter >=0:
+                turned_on_wall.set_transparency(1 + counter * 8)
+                counter -= 1
             #update visuals
             self.view.update_screen()
 

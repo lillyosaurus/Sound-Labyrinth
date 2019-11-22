@@ -83,6 +83,7 @@ class GameMap():
         x = 0
         y = 0
         offset = 0
+        return_list = []
         if direction == 'up':
             x = 0
             y = -1
@@ -104,9 +105,11 @@ class GameMap():
             if ping_wall != None:
                 blocks_away = (i + offset + self.pixel_size/2)/self.pixel_size
                 ping_wall.image.set_alpha(255)
-                return blocks_away
+                return_list.append(ping_wall)
+                return_list.append(blocks_away)
+                return return_list
 
-        return None
+        return [None,None]
 
     def at_block(self):
         if self.player.rect.x % self.pixel_size == 0:
