@@ -8,10 +8,10 @@ display controlls information/ instructions (Kyle)
 remove delay on sound pings (kyle)
     please do not use sleep()
 
-Build speesh synthesizer (kyle)
+Build speach synthesizer (kyle)
 
 Build function for npc dialogue (Sungyu)
-def speech("string")
+def speach("string")
     play voice synthesizer
     display text
     return none
@@ -26,6 +26,7 @@ Build introductory level design for level(Tim)
 import model
 import pygame
 import os
+import game_object as go
 
 if __name__ == '__main__':
     os.environ['SDL_VIDEO_CENTERED'] = '1'
@@ -33,3 +34,4 @@ if __name__ == '__main__':
     pygame.mixer.init()
     m = model.Model()
     m.run_game()
+    grim = go.NPC("image/NPC4.png",["line0","line1","line2","line3","line4"], [1,3])
