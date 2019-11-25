@@ -34,4 +34,3 @@ if __name__ == '__main__':
     pygame.mixer.init()
     m = model.Model()
     m.run_game()
-    grim = go.NPC("image/NPC4.png",["line0","line1","line2","line3","line4"], [1,3])

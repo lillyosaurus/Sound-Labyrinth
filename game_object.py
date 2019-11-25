@@ -6,9 +6,13 @@ class GameObject(pygame.sprite.Sprite):
 
     def __init__(self, image):
         pygame.sprite.Sprite.__init__(self)
+
         self.image = pygame.image.load(image)
+        self.image.set_colorkey((0,0,0))
+
         self.rect = self.image.get_rect()
         self.original_image = self.image
+
 
     def location(self):
         return(self.rect.x, self.rect.y)
@@ -48,15 +52,9 @@ class GameObject(pygame.sprite.Sprite):
 class Wall(GameObject):
 
     def __init__(self, x, y):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.getcwd()+"/image/wall.png")
-        self.image = pygame.transform.rotate(self.image, random.choice([0,90,180,270]))
-        self.image.set_colorkey((0,0,0))
-        self.original_image = self.image
+        super().__init__(os.getcwd()+"/image/wall.png")
+        super().set_position(x,y)
         self.set_transparency(1)
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
 
     def scale_image(self, new_size):
         self.image = pygame.transform.scale(self.image, (new_size, new_size))
@@ -75,13 +73,8 @@ class Player(GameObject):
 
     def __init__(self, x, y):
         """Set the starting values of the attributes"""
-
-        pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(os.getcwd()+"/image/player.png")
-        self.image.set_colorkey((0,0,0))
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
+        super().__init__(os.getcwd()+"/image/player.png")
+        super().set_position(x,y)
         self.speed = 1
         self.inventory = {}
 
