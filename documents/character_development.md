@@ -51,3 +51,18 @@ You do? Why?
 Because you showed me the way. 
 
 You couldnt stop them, but neither could I. You at least fought against them when all I did was run and hide. You showed me who to be and what our world needed.
+
+## The Reaper
+
+### Description
+
+### Dialogue
+Hello again and welcome. Its about time that you pass through here. A lot of people have been waiting for this for a long time...
+
+Ah you dont know where you are. Welcome to the labrynth, the endless maze between the world of the living and the dead. This place of suffering and madness is where souls are kept if they still have unfinished buisness, ties to the world or regrets for what they've done etc. 
+
+Ah you you remember why your here. All of those people you wronged? All of those people you used then threw away when they were of no use to you. That didn't sit right with something in you. Now you have to pay the bill.
+
+What to you need to do? I should think you figured it out by now. You have to make peace with that part of yourself. Prove that you are changed, that people mean something to you.
+
+There are other souls here as well maybe talk to them se what they need. Do something for someone else for a change. What a concept. 
