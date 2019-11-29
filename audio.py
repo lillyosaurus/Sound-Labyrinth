@@ -1,4 +1,5 @@
 import pygame
+import pyttsx3
 from time import sleep
 
 class Audio(object):
@@ -27,17 +28,14 @@ class Audio(object):
             sleep(time_delay)
             channel = sound.play()
             channel.set_volume(volume,volume)
-            sleep(audio_length*3)
         elif direction == 'right':
             sleep(time_delay)
             channel = sound.play()
             channel.set_volume(0,volume)
-            sleep(audio_length*3)
         elif direction == 'left':
             sleep(time_delay)
             channel = sound.play()
             channel.set_volume(volume,0)
-            sleep(audio_length*3)
 
 
 

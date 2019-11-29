@@ -5,8 +5,8 @@ fix bug with multiple walls displaying (Sungyu)
 
 display controls information/ instructions (Kyle)
 
-remove delay on sound pings (kyle)
-    please do not use sleep()
+remove delay on sound pings (kyle) -- DONE(?)
+    please do not use sleep()  -- only used if we want a delay to show the pings
 
 Build speech synthesizer (kyle)
 

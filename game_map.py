@@ -116,3 +116,14 @@ class GameMap():
             if self.player.rect.y % self.pixel_size == 0:
                 return True
         return False
+
+    def intro_pages(self, title = True, instructions = False, info = False):
+        if title == True:
+            # draw title screen
+            pass
+        elif instructions == True:
+            # draw instruction page
+            pass
+        elif info == True:
+            #draw info screen
+            pass

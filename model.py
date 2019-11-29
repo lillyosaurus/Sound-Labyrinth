@@ -13,10 +13,16 @@ class Model:
         self.map = gm.GameMap()
         self.view = view.View(self.map)
         self.controller = c.Controller()
-        self.ping_delay = 1000
+        self.ping_delay = 600
         self.previous_time = 0
         self.turned_on_wall = None
         self.wall_transparency = 0
+
+        self.show_home_screen = True
+        self.show_instructions = False
+        self.show_credits = False
+        self.game_on = False
+        self.run = True
 
     def process_ping(self,direction,sight_range,current_time):
         if self.controller.ping_keys[direction]:
@@ -32,68 +38,106 @@ class Model:
                     self.view.play_echo(round(dist),direction, self.view.audio.hollow_sound)
                     self.turned_on_wall = ping_check[0]
                     self.wall_transparency = 30
-        #return turned_on_wall
+
+    def show_screen(self,screen):
+        """Takes in a screen name, and displays the proper screen"""
+        self.show_home_screen = False
+        self.show_instructions = False
+        self.show_credits = False
+        self.game_on = False
+        if screen == 'home_screen':
+            self.show_home_screen = True
+        elif screen == 'instructions':
+            self.show_instructions = True
+        elif screen == 'credits':
+            self.show_credits = True
+        elif screen == 'game':
+            self.game_on = True
 
     def run_game(self):
-
         #EXPLAIN
         clock = pygame.time.Clock()
-
-
         #Initializes current time object
         current_time = 0
 
-        while(self.view.on == True):
-            current_time = pygame.time.get_ticks()
-            #print(current_time)
-            #forces the frames per second (fps) of the game to be equal to 60 fps
-            clock.tick(60)
-
-            #prevents the user from providing input while they are moving
-            if self.map.at_block() == True:
-                #updates the controller-
+        while self.run:
+            if self.show_home_screen == True:
+                self.view.update_screen('home_screen')
                 self.controller.read_input()
-                
-                #process controller inputs for pings
-                self.process_ping('front',3,current_time)
-                self.process_ping('back',3,current_time)
-                self.process_ping('right',3,current_time)
-                self.process_ping('left',3,current_time)
+                if self.controller.hs_keys['I']:
+                    self.show_screen('instructions')
+                elif self.controller.hs_keys['C']:
+                    self.show_screen('credits')
+                elif self.controller.hs_keys['space']:
+                    self.show_screen('game')
 
-            #process controller inputs for moving
-            speed = self.map.player.speed
-            if self.controller.move_keys['north']:
+            elif self.show_instructions == True:
+                self.view.update_screen('instructions')
+                self.controller.read_input()
+                if self.controller.hs_keys['H']:
+                    self.show_screen('home_screen')
+                elif self.controller.hs_keys['space']:
+                    self.show_screen('game')
 
-                #TODO: Extract to function in player
-                #player.move("direction")
-                self.map.player.rect.move_ip(0,-speed)
-                if self.map.player_wall_collision() != None:
-                        self.map.player.rect.move_ip(0,speed)
+            elif self.show_credits == True:
+                self.view.update_screen('credits')
+                self.controller.read_input()
+                if self.controller.hs_keys['H']:
+                    self.show_screen('home_screen')
 
-            elif self.controller.move_keys['south']:
 
-                self.map.player.rect.move_ip(0,speed)
-                if self.map.player_wall_collision() != None:
-                        self.map.player.rect.move_ip(0,-speed)
 
-            elif self.controller.move_keys['west']:
+            while self.game_on == True:
+                current_time = pygame.time.get_ticks()
+                #print(current_time)
+                #forces the frames per second (fps) of the game to be equal to 60 fps
+                clock.tick(60)
 
-                self.map.player.rect.move_ip(-speed,0)
-                if self.map.player_wall_collision() != None:
-                        self.map.player.rect.move_ip(speed,0)
+                #prevents the user from providing input while they are moving
+                if self.map.at_block() == True:
+                    #updates the controller-
+                    self.controller.read_input()
 
-            elif self.controller.move_keys['east']:
+                    #process controller inputs for pings
+                    self.process_ping('front',3,current_time)
+                    self.process_ping('back',3,current_time)
+                    self.process_ping('right',3,current_time)
+                    self.process_ping('left',3,current_time)
 
-                self.map.player.rect.move_ip(speed,0)
-                if self.map.player_wall_collision() != None:
-                        self.map.player.rect.move_ip(-speed,0)
+                #process controller inputs for moving
+                speed = self.map.player.speed
+                if self.controller.move_keys['north']:
 
-            if self.turned_on_wall != None and self.wall_transparency >=0:
-                self.turned_on_wall.set_transparency(1 + self.wall_transparency * 8)
-                self.wall_transparency -= 1
-                print('reduce wall transparency' + str(self.wall_transparency))
-            #update visuals
-            self.view.update_screen()
+                    #TODO: Extract to function in player
+                    #player.move("direction")
+                    self.map.player.rect.move_ip(0,-speed)
+                    if self.map.player_wall_collision() != None:
+                            self.map.player.rect.move_ip(0,speed)
+
+                elif self.controller.move_keys['south']:
+
+                    self.map.player.rect.move_ip(0,speed)
+                    if self.map.player_wall_collision() != None:
+                            self.map.player.rect.move_ip(0,-speed)
+
+                elif self.controller.move_keys['west']:
+
+                    self.map.player.rect.move_ip(-speed,0)
+                    if self.map.player_wall_collision() != None:
+                            self.map.player.rect.move_ip(speed,0)
+
+                elif self.controller.move_keys['east']:
+
+                    self.map.player.rect.move_ip(speed,0)
+                    if self.map.player_wall_collision() != None:
+                            self.map.player.rect.move_ip(-speed,0)
+
+                if self.turned_on_wall != None and self.wall_transparency >=0:
+                    self.turned_on_wall.set_transparency(1 + self.wall_transparency * 8)
+                    self.wall_transparency -= 1
+                    print('reduce wall transparency' + str(self.wall_transparency))
+                #update visuals
+                self.view.update_screen('game')
 
 
 if __name__ == "__main__":
