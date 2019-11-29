@@ -27,7 +27,6 @@ class Controller:
         self.move_keys = {'north':False,'south':False,'west':False,'east':False}
         self.inventory_keys = {'1':False,'2':False,'3':False,'4':False,'5':False}
 
-
     def read_input(self):
         """Read the inputs to the game
 

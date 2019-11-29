@@ -84,10 +84,10 @@ class GameMap():
         y = 0
         offset = 0
         return_list = []
-        if direction == 'up':
+        if direction == 'front':
             x = 0
             y = -1
-        elif direction == 'down':
+        elif direction == 'back':
             x = 0
             y = 1
             offset = 1

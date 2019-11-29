@@ -16,7 +16,7 @@ class View:
         self.on = self.visual.on
 
     def play_echo(self,distance,direction,sound):
-        self.audio.echo(distance,direction, sound)
+        self.audio.echo(distance,direction,sound)
 
 if __name__ == "__main__":
     pass

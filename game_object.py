@@ -150,8 +150,7 @@ class NPC(GameObject):
         self.index_position = 0
 
     def update_dialogue(self):
-    """A method which handels loading the dialogue lines of the NPC"""
-
+    #"""A method which handels loading the dialogue lines of the NPC"""
         #if there is a checkpoint needed for the next line of dialogue
         if index_position in self.key.keys():
             #if the player has achieved the checkpoint

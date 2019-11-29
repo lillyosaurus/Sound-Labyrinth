@@ -5,7 +5,7 @@ class Audio(object):
     """docstring for Audo."""
     def __init__(self):
         self.volume_to_distance = [1,.6,.1]
-        self.time_delay_to_distance = [0,.5,1]
+        self.time_delay_to_distance = [0,0,0]
         self.get_audio_files()
     def get_audio_files(self):
         self.ping_sound = pygame.mixer.Sound("Sounds/ping_2.wav")
@@ -23,7 +23,7 @@ class Audio(object):
         time_delay = self.time_delay_to_distance[distance -1]
         audio_length = pygame.mixer.Sound.get_length(sound)
 
-        if direction == 'up' or direction == 'down':
+        if direction == 'front' or direction == 'back':
             sleep(time_delay)
             channel = sound.play()
             channel.set_volume(volume,volume)

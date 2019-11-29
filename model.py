@@ -5,9 +5,6 @@ import pygame
 import visual
 import game_map
 import game_object
-#import audio
-#from time import sleep
-#import math
 
 class Model:
 
@@ -16,7 +13,26 @@ class Model:
         self.map = gm.GameMap()
         self.view = view.View(self.map)
         self.controller = c.Controller()
+        self.ping_delay = 1000
+        self.previous_time = 0
+        self.turned_on_wall = None
+        self.wall_transparency = 0
 
+    def process_ping(self,direction,sight_range,current_time):
+        if self.controller.ping_keys[direction]:
+            print('going the direction')
+            ping_check = self.map.ping_from_player(direction,sight_range)
+            dist = ping_check[1]
+            if current_time - self.previous_time >= self.ping_delay:
+                print('updating_time')
+                print(dist)
+                self.previous_time = current_time
+                if dist != None:
+                    print('performing action')
+                    self.view.play_echo(round(dist),direction, self.view.audio.hollow_sound)
+                    self.turned_on_wall = ping_check[0]
+                    self.wall_transparency = 30
+        #return turned_on_wall
 
     def run_game(self):
 
@@ -24,68 +40,26 @@ class Model:
         clock = pygame.time.Clock()
 
 
-        #Stores which direction was just pinged so you cant ping twice in the same direction
-        previous_ping = None
-        turned_on_wall = None
-        counter = 0
+        #Initializes current time object
+        current_time = 0
 
         while(self.view.on == True):
-
+            current_time = pygame.time.get_ticks()
+            #print(current_time)
             #forces the frames per second (fps) of the game to be equal to 60 fps
             clock.tick(60)
 
             #prevents the user from providing input while they are moving
             if self.map.at_block() == True:
-
-                #updates the controller
+                #updates the controller-
                 self.controller.read_input()
-
+                
                 #process controller inputs for pings
-                if self.controller.ping_keys['front']:
+                self.process_ping('front',3,current_time)
+                self.process_ping('back',3,current_time)
+                self.process_ping('right',3,current_time)
+                self.process_ping('left',3,current_time)
 
-                    #TODO: EXtract to function in Model
-                    #process_ping('direction',sight_range,clock)
-                    #   do visual and audio only when allowed after 1 second
-                    #   return None
-                    ping_check = self.map.ping_from_player('up',3)
-                    print(ping_check)
-                    dist = ping_check[1]
-                    if previous_ping != 'up':
-                        previous_ping = 'up'
-                        if dist != None:
-                            self.view.play_echo(round(dist),'up', self.view.audio.hollow_sound)
-                            turned_on_wall = ping_check[0]
-                            counter = 30
-                elif self.controller.ping_keys['right']:
-
-                    ping_check = self.map.ping_from_player('right',3)
-                    dist = ping_check[1]
-                    if previous_ping != 'right':
-                        previous_ping = 'right'
-                        if dist != None:
-                            self.view.play_echo(round(dist),'right', self.view.audio.hollow_sound)
-                            turned_on_wall = ping_check[0]
-                            counter = 30
-                elif self.controller.ping_keys['left']:
-
-                    ping_check = self.map.ping_from_player('left',3)
-                    dist = ping_check[1]
-                    if previous_ping != 'left':
-                        previous_ping = 'left'
-                        if dist != None:
-                            self.view.play_echo(round(dist),'left', self.view.audio.hollow_sound)
-                            turned_on_wall = ping_check[0]
-                            counter = 30
-                elif self.controller.ping_keys['back']:
-
-                    ping_check = self.map.ping_from_player('down',3)
-                    dist = ping_check[1]
-                    if previous_ping != 'down':
-                        previous_ping = 'down'
-                        if dist != None:
-                            self.view.play_echo(round(dist),'down', self.view.audio.hollow_sound)
-                            turned_on_wall = ping_check[0]
-                            counter = 30
             #process controller inputs for moving
             speed = self.map.player.speed
             if self.controller.move_keys['north']:
@@ -114,9 +88,10 @@ class Model:
                 if self.map.player_wall_collision() != None:
                         self.map.player.rect.move_ip(-speed,0)
 
-            if turned_on_wall != None and counter >=0:
-                turned_on_wall.set_transparency(1 + counter * 8)
-                counter -= 1
+            if self.turned_on_wall != None and self.wall_transparency >=0:
+                self.turned_on_wall.set_transparency(1 + self.wall_transparency * 8)
+                self.wall_transparency -= 1
+                print('reduce wall transparency' + str(self.wall_transparency))
             #update visuals
             self.view.update_screen()
 
