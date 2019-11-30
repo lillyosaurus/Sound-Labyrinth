@@ -40,7 +40,11 @@ class Model:
                     self.wall_transparency = 30
 
     def show_screen(self,screen):
-        """Takes in a screen name, and displays the proper screen"""
+        """Updates boolean to display the correct screen
+
+        The function sets all screen display booleans to false and takes the referenced display screen and sets that boolean to be true
+
+        """
         self.show_home_screen = False
         self.show_instructions = False
         self.show_credits = False

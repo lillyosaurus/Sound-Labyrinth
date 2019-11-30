@@ -46,15 +46,19 @@ class VisualView():
     def draw_home_screen(self):
         self.draw_sentence('Sound',96,[self.width//2,self.height//3-48])
         self.draw_sentence('Labyrinth',96,[self.width//2,self.height//3+60])
-        self.map.player.draw_offset(self.screen, self.width//2, self.height//2 + 48)
+        #self.draw_image(self.screen, self.width//2, self.height//2 + 48)
         self.draw_sentence('Software Design - Fall 2019',48,[self.width//2, 3*self.height//4-30])
         self.draw_sentence('Kyle Bertram  SeungU Lyu Tim Novak',36,[self.width//2, 3*self.height//4+30])
+        self.draw_sentence('Kyle Bertram  SeungU Lyu Tim Novak',36,[self.width//2, 3*self.height//4+30])
+        self.draw_sentence('Press I for Instructions, Press C for Credits, Press Space to Start',36,[self.width//2, self.height - 96])
 
     def draw_instructions(self):
         self.draw_sentence('INSTRUCTIONS GO HERE',36,[self.width//2, self.height//2])
+        self.draw_sentence('Press H for Home, Press Space to Start',36,[self.width//2, self.height - 96])
 
     def draw_credits(self):
         self.draw_sentence('CREDITS GO HERE',36,[self.width//2, self.height//2])
+        self.draw_sentence('Press H for Home',36,[self.width//2, self.height - 96])
 
     def close_screen(self):
         for event in pygame.event.get():
