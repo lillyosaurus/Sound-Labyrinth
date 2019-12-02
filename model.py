@@ -89,7 +89,8 @@ class Model:
                 if self.controller.hs_keys['H']:
                     self.show_screen('home_screen')
 
-
+            if self.view.visual.game_on == False:
+                    self.run = False
 
             while self.game_on == True:
                 current_time = pygame.time.get_ticks()
@@ -142,6 +143,9 @@ class Model:
                     print('reduce wall transparency' + str(self.wall_transparency))
                 #update visuals
                 self.view.update_screen('game')
+                if self.view.visual.game_on == False:
+                    self.game_on = False
+                    self.run = False
 
 
 if __name__ == "__main__":
