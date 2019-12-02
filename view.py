@@ -16,7 +16,6 @@ class View:
         self.display_correct_screen(screen)
         self.visual.close_screen()
         self.visual.refresh_screen()
-        self.game_on = self.visual.game_on
 
     def display_correct_screen(self,screen):
         if screen == 'home_screen':

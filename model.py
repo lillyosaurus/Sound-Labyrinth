@@ -24,6 +24,20 @@ class Model:
         self.game_on = False
         self.run = True
 
+    def wall_collision_ping(self,direction,current_time):
+        print('going the direction')
+        ping_check = self.map.ping_from_player(direction,1)
+        dist = ping_check[1]
+        if current_time - self.previous_time >= self.ping_delay:
+            print('updating_time')
+            print(dist)
+            self.previous_time = current_time
+            if dist != None:
+                print('performing action')
+                #self.view.play_echo(round(dist),direction, self.view.audio.hollow_sound)
+                self.turned_on_wall = ping_check[0]
+                self.wall_transparency = 30
+
     def process_ping(self,direction,sight_range,current_time):
         if self.controller.ping_keys[direction]:
             print('going the direction')
@@ -118,24 +132,28 @@ class Model:
                     self.map.player.rect.move_ip(0,-speed)
                     if self.map.player_wall_collision() != None:
                             self.map.player.rect.move_ip(0,speed)
+                            self.wall_collision_ping('front',current_time)
 
                 elif self.controller.move_keys['south']:
 
                     self.map.player.rect.move_ip(0,speed)
                     if self.map.player_wall_collision() != None:
                             self.map.player.rect.move_ip(0,-speed)
+                            self.wall_collision_ping('back',current_time)
 
                 elif self.controller.move_keys['west']:
 
                     self.map.player.rect.move_ip(-speed,0)
                     if self.map.player_wall_collision() != None:
                             self.map.player.rect.move_ip(speed,0)
+                            self.wall_collision_ping('left',current_time)
 
                 elif self.controller.move_keys['east']:
 
                     self.map.player.rect.move_ip(speed,0)
                     if self.map.player_wall_collision() != None:
                             self.map.player.rect.move_ip(-speed,0)
+                            self.wall_collision_ping('right',current_time)
 
                 if self.turned_on_wall != None and self.wall_transparency >=0:
                     self.turned_on_wall.set_transparency(1 + self.wall_transparency * 8)

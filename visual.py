@@ -63,6 +63,5 @@ class VisualView():
     def close_screen(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                print(self.game_on)
                 self.game_on = False
                 
