@@ -1,11 +1,10 @@
-'''
 # pip install pyttsx3 pypiwin32
 import pyttsx3
 # One time initialization
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')
 # Set properties _before_ you add things to say
-engine.setProperty('rate', 150)    # Speed percent (can go over 100)
+engine.setProperty('rate', 120)    # Speed percent (can go over 100)
 engine.setProperty('volume', 0.9)  # Volume 0-1
 #
 # Queue up things to say.
@@ -16,7 +15,7 @@ engine.say("You can queue up multiple items")
 
 # Flush the say() queue and play the audio
 engine.runAndWait()
-'''
+
 # Program will not continue execution until
 # all speech is done talking
 
@@ -89,7 +88,7 @@ engine.runAndWait()
 # vietnam_sgn
 # Mandarin
 # cantonese
-
+'''
 
 # Import the required module for text
 # to speech conversion
@@ -117,3 +116,4 @@ myobj.save("welcome.mp3")
 
 # Playing the converted file
 #os.system("mpg321 welcome.mp3")
+'''
