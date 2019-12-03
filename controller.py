@@ -25,7 +25,7 @@ class Controller:
         #values are true while the key is pressed and false when the key is not
         self.ping_keys = {'front':False,'back':False,'left':False,'right':False}
         self.move_keys = {'north':False,'south':False,'west':False,'east':False}
-        self.inventory_keys = {'1':False,'2':False,'3':False,'4':False,'5':False}
+        self.interact_key = False
         self.hs_keys = {'space':False,'I':False,'C':False,'H':False}
 
     def read_input(self):
@@ -62,8 +62,4 @@ class Controller:
         self.move_keys['east'] = pressed_keys[pygame.K_d]
 
         #update the values of the inventory slot controlling keys
-        self.inventory_keys['1'] = pressed_keys[pygame.K_1]
-        self.inventory_keys['2'] = pressed_keys[pygame.K_2]
-        self.inventory_keys['3'] = pressed_keys[pygame.K_3]
-        self.inventory_keys['4'] = pressed_keys[pygame.K_4]
-        self.inventory_keys['5'] = pressed_keys[pygame.K_5]
+        self.interact_key = pressed_keys[pygame.K_e]

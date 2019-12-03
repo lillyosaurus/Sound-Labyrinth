@@ -1,6 +1,6 @@
 """TODO:
 
-fix bug with multiple walls displaying (Sungyu)
+fix bug with multiple walls displaying (Sungyu) - DONE (?)
     maybe make a wall hide all the other walls when pinged
 
 display controls information/ instructions (Kyle)
@@ -18,9 +18,9 @@ def speach("string")
     display text
     return none
 
-Make NPC class (Tim)
+Make NPC class (Tim) - DONE
 
-Build introductory NPC of the grim reaper to introduce you to the world and your situation (Tim)
+Build introductory NPC of the grim reaper to introduce you to the world and your situation (Tim) - DONE
 
 Build introductory level design for level(Tim)
 """
@@ -28,7 +28,6 @@ Build introductory level design for level(Tim)
 import model
 import pygame
 import os
-import game_object as go
 
 if __name__ == '__main__':
     os.environ['SDL_VIDEO_CENTERED'] = '1'
@@ -36,6 +35,3 @@ if __name__ == '__main__':
     pygame.mixer.init()
     m = model.Model()
     m.run_game()
-    reaper = go.NPC("reaper")
-    print(reaper.dialogue)
-    print(reaper.key)
