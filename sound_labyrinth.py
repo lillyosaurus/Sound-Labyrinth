@@ -36,3 +36,6 @@ if __name__ == '__main__':
     pygame.mixer.init()
     m = model.Model()
     m.run_game()
+    reaper = go.NPC("reaper")
+    print(reaper.dialogue)
+    print(reaper.key)
