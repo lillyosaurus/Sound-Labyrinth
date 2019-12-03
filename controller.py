@@ -26,7 +26,7 @@ class Controller:
         self.ping_keys = {'front':False,'back':False,'left':False,'right':False}
         self.move_keys = {'north':False,'south':False,'west':False,'east':False}
         self.inventory_keys = {'1':False,'2':False,'3':False,'4':False,'5':False}
-
+        self.hs_keys = {'space':False,'I':False,'C':False,'H':False}
 
     def read_input(self):
         """Read the inputs to the game
@@ -42,6 +42,12 @@ class Controller:
 
         #get which keys are pressed
         pressed_keys = pygame.key.get_pressed()
+
+        #update home screen move_keys
+        self.hs_keys['space'] = pressed_keys[pygame.K_SPACE]
+        self.hs_keys['I'] = pressed_keys[pygame.K_i]
+        self.hs_keys['C'] = pressed_keys[pygame.K_c]
+        self.hs_keys['H'] = pressed_keys[pygame.K_h]
 
         #update the values of the ping controlling keys
         self.ping_keys['front'] = pressed_keys[pygame.K_UP]

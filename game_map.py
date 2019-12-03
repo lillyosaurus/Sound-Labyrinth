@@ -84,10 +84,10 @@ class GameMap():
         y = 0
         offset = 0
         return_list = []
-        if direction == 'up':
+        if direction == 'front':
             x = 0
             y = -1
-        elif direction == 'down':
+        elif direction == 'back':
             x = 0
             y = 1
             offset = 1
@@ -116,3 +116,14 @@ class GameMap():
             if self.player.rect.y % self.pixel_size == 0:
                 return True
         return False
+
+    def intro_pages(self, title = True, instructions = False, info = False):
+        if title == True:
+            # draw title screen
+            pass
+        elif instructions == True:
+            # draw instruction page
+            pass
+        elif info == True:
+            #draw info screen
+            pass

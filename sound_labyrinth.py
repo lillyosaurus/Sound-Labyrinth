@@ -3,12 +3,14 @@
 fix bug with multiple walls displaying (Sungyu)
     maybe make a wall hide all the other walls when pinged
 
-display controlls information/ instructions (Kyle)
+display controls information/ instructions (Kyle)
 
-remove delay on sound pings (kyle)
-    please do not use sleep()
+remove delay on sound pings (kyle) -- DONE(?)
+    please do not use sleep()  -- only used if we want a delay to show the pings
 
-Build speach synthesizer (kyle)
+Build speech synthesizer (kyle)
+
+Clean up model.py code for pinging (kyle) - DONE
 
 Build function for npc dialogue (Sungyu)
 def speach("string")
