@@ -123,7 +123,7 @@ class Model:
                     self.process_ping('right',3,current_time)
                     self.process_ping('left',3,current_time)
 
-                #process controller inputs for moving
+                #process controller inputs for moving and interacting
                 speed = self.map.player.speed
                 if self.controller.move_keys['north']:
 
@@ -133,6 +133,10 @@ class Model:
                     if self.map.player_wall_collision() != None:
                             self.map.player.rect.move_ip(0,speed)
                             self.wall_collision_ping('front',current_time)
+                    """#if the player runs into an npc cause the player to interact
+                    if self.map.player_NPC_collision() != None:
+                            self.map.player.rect.move_ip(0,speed)
+                            self.NPC_collision_ping('front',current_time)"""
 
                 elif self.controller.move_keys['south']:
 

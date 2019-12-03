@@ -1,7 +1,7 @@
 # Characters
 ## The Fallen Ruler
 
-![A small spirit with a tall three pronged crown and a sad regretful look on its face.](/../image/NPC3.png)
+![A small spirit with a tall three pronged crown and a sad regretful look on its face.](/../NPCs/fallen_ruler/fallen_ruler.png)
 
 ### Description
 

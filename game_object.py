@@ -138,19 +138,27 @@ class NPC(GameObject):
     """A class which describes NPCs in the world
 
     Attributes:
+    directory -> the file folder which stores the NPC data
     dialogue -> a list of the dialogue strings of the NPC
     key -> a dictionary storing the checkpoint items of the player to advance dialogue
     index_position -> a tracker to track what point the character is through their dialogue"""
 
-    def __init__(self, image, dialogue, key):
+    def __init__(self, directory):
         """Set the starting values of the attributes"""
-        super().__init__(image)
-        self.dialogue = dialogue
-        self.key = key
+        super().__init__(os.getcwd()+"/documents/NPCs/" + directory + "/image.png")
+        self.directory = directory
+        self.dialogue = self.load_file("dialogue")
+        self.key = self.load_file("keys")
         self.index_position = 0
 
+    def load_file(self,attribute):
+        """Pull an atribute from the designated file"""
+        file = open(os.getcwd()+"/documents/NPCs/" + self.directory + "/" + attribute + ".txt")
+        return eval(file.read())
+
     def update_dialogue(self):
-    #"""A method which handels loading the dialogue lines of the NPC"""
+        """A method which handels loading the dialogue lines of the NPC"""
+
         #if there is a checkpoint needed for the next line of dialogue
         if index_position in self.key.keys():
             #if the player has achieved the checkpoint
