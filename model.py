@@ -77,6 +77,7 @@ class Model:
         clock = pygame.time.Clock()
         #Initializes current time object
         current_time = 0
+        animation_step = 0
 
         while self.run:
             if self.show_home_screen == True:
@@ -112,6 +113,9 @@ class Model:
                 #forces the frames per second (fps) of the game to be equal to 60 fps
                 clock.tick(60)
 
+                if animation_step == 16:
+                    animation_step = 0
+
                 #prevents the user from providing input while they are moving
                 if self.map.at_block() == True:
                     #updates the controller-
@@ -133,6 +137,11 @@ class Model:
                     if self.map.player_wall_collision() != None:
                             self.map.player.rect.move_ip(0,speed)
                             self.wall_collision_ping('front',current_time)
+                    else:
+                        animation_step += 1
+                        if animation_step % 2 == 0:
+                            print(animation_step)
+                            self.map.player.set_image('north',int(animation_step/2))
                     """#if the player runs into an npc cause the player to interact
                     if self.map.player_NPC_collision() != None:
                             self.map.player.rect.move_ip(0,speed)
@@ -144,6 +153,11 @@ class Model:
                     if self.map.player_wall_collision() != None:
                             self.map.player.rect.move_ip(0,-speed)
                             self.wall_collision_ping('back',current_time)
+                    else:
+                        animation_step += 1
+                        if animation_step % 2 == 0:
+                            print(animation_step)
+                            self.map.player.set_image('south',int(animation_step/2))
 
                 elif self.controller.move_keys['west']:
 
@@ -151,6 +165,11 @@ class Model:
                     if self.map.player_wall_collision() != None:
                             self.map.player.rect.move_ip(speed,0)
                             self.wall_collision_ping('left',current_time)
+                    else:
+                        animation_step += 1
+                        if animation_step % 2 == 0:
+                            print(animation_step)
+                            self.map.player.set_image('west',int(animation_step/2))
 
                 elif self.controller.move_keys['east']:
 
@@ -158,6 +177,11 @@ class Model:
                     if self.map.player_wall_collision() != None:
                             self.map.player.rect.move_ip(-speed,0)
                             self.wall_collision_ping('right',current_time)
+                    else:
+                        animation_step += 1
+                        if animation_step % 2 == 0:
+                            print(animation_step)
+                            self.map.player.set_image('east',int(animation_step/2))
 
                 if self.turned_on_wall != None and self.wall_transparency >=0:
                     self.turned_on_wall.set_transparency(1 + self.wall_transparency * 8)

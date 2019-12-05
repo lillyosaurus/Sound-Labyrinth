@@ -102,8 +102,13 @@ class Player(GameObject):
 
     def __init__(self, x, y):
         """Set the starting values of the attributes"""
-        super().__init__(os.getcwd()+"/image/player.png")
+        super().__init__(os.getcwd()+"/image/player1.png")
         super().set_position(x,y)
+        self.animation_right = []
+        self.load_images()
+        self.animation_left = self.rotate_animation_image(180)
+        self.animation_up = self.rotate_animation_image(270)
+        self.animation_down = self.rotate_animation_image(90)
         self.speed = 1
         self.inventory = {}
 
@@ -118,6 +123,37 @@ class Player(GameObject):
 
     def move_player(self, direction):
         pass
+
+    def rotate_animation_image(self,degree):
+        images = []
+        for image in self.animation_right:
+            images.append(pygame.transform.rotate(image, degree))
+        return images
+
+    def load_images(self):
+        for i in range(5):
+            image = pygame.image.load(os.getcwd()+"/image/player"+str(i+1)+".png")
+            self.animation_right.append(image)
+    
+    def scale_image(self, new_size):
+        self.image = pygame.transform.scale(self.image, (new_size, new_size))
+        self.rect.size = (new_size, new_size)
+        for i in range(5):
+            self.animation_down[i] = pygame.transform.scale(self.animation_down[i], (new_size, new_size))
+            self.animation_up[i] = pygame.transform.scale(self.animation_up[i], (new_size, new_size))
+            self.animation_right[i] = pygame.transform.scale(self.animation_right[i], (new_size, new_size))
+            self.animation_left[i] = pygame.transform.scale(self.animation_left[i], (new_size, new_size))
+    def set_image(self, direction, step):
+        if step > 4:
+            step = 8-step
+        if direction == "north":
+            self.image = self.animation_up[step]
+        if direction == "south":
+            self.image = self.animation_down[step]
+        if direction == "east":
+            self.image = self.animation_right[step]
+        if direction == "west":
+            self.image = self.animation_left[step]
 
 class Ping(GameObject):
     """A class which describes the ping object used for querying distance
