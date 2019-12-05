@@ -17,11 +17,22 @@ class VisualView():
         self.game_on = True
         self.font_type = 'AmaticSC-Regular.ttf'
 
+        self.load_images()
+
+        self.show_clicks = True
+        self.tick = 0
+
+    def load_images(self):
+        self.control_img_size = 72
         self.player = pygame.transform.scale(pygame.image.load('image/player.png'),(self.img_size,self.img_size))
         self.arrows = self.wall = pygame.transform.scale(pygame.image.load('image/test_arrows.png'),(self.img_size*2,self.img_size))
         self.aswd = self.wall = pygame.transform.scale(pygame.image.load('image/test_aswd.png'),(self.img_size*2,self.img_size))
-        self.show_clicks = True
-        self.tick = 0
+
+        # load ASWD
+        self.a = self.wall = pygame.transform.scale(pygame.image.load('image/controls/a.png'),(self.control_img_size,self.control_img_size))
+        self.s = self.wall = pygame.transform.scale(pygame.image.load('image/controls/s.png'),(self.control_img_size,self.control_img_size))
+        self.w = self.wall = pygame.transform.scale(pygame.image.load('image/controls/w.png'),(self.control_img_size,self.control_img_size))
+        self.d = self.wall = pygame.transform.scale(pygame.image.load('image/controls/d.png'),(self.control_img_size,self.control_img_size))
 
     def clear_screen(self):
         self.screen.fill((0,0,0))
@@ -55,19 +66,14 @@ class VisualView():
 
         my_rect = textrect.render_textrect(sentance,font,rect,white,black,justification = 0)
         self.screen.blit(my_rect, rect.topleft)
-        # pure_white = (255, 255, 255)
-        # white = (220,220,220)
-        # black = (0, 0, 0)
-        # line = []
-        # for character in sentance:
-        #     line.append(character)
-        #     font = pygame.font.Font(self.font_type,size)
-        #     line1 = font.render(''.join(line), True, white, black)
-        #     print(pygame.font.Font.size(line1))
-        pass
 
     def draw_image(self,image,rect_center):
         self.screen.blit(image,rect_center)
+
+    def draw_rotated_image(self,image,angle,rect_center):
+        """ Rotates an image counterclockwise with units of degrees"""
+        new_image = pygame.transform.rotate(image,angle)
+        self.draw_image(new_image,rect_center)
 
     def blink_text(self,sentance,size,rect_center,time):
         if pygame.time.get_ticks() < self.tick + time:
@@ -85,6 +91,18 @@ class VisualView():
         self.draw_sentence('Kyle Bertram  SeungU Lyu Tim Novak',36,[self.width//2, 3*self.height//4+30])
         self.blink_text('Press I for Instructions, Press C for Credits, Press Space to Start',36,[self.width//2, self.height - 96], 1000)
 
+    def draw_aswd(self,aswd_center_x,aswd_center_y):
+        self.draw_image(self.a, [aswd_center_x-self.control_img_size*2//2, aswd_center_y+self.control_img_size//2])
+        self.draw_image(self.s, [aswd_center_x, aswd_center_y+self.control_img_size//2])
+        self.draw_image(self.w, [aswd_center_x, aswd_center_y-self.control_img_size//2])
+        self.draw_image(self.d, [aswd_center_x+self.control_img_size*2//2, aswd_center_y+self.control_img_size//2])
+
+    def draw_arrow(self,arrow_center_x,arrow_center_y):
+        self.draw_rotated_image(self.a,90, [arrow_center_x-self.control_img_size*2//2, arrow_center_y+self.control_img_size//2])
+        self.draw_rotated_image(self.a,180, [arrow_center_x, arrow_center_y+self.control_img_size//2])
+        self.draw_rotated_image(self.a,0, [arrow_center_x, arrow_center_y-self.control_img_size//2])
+        self.draw_rotated_image(self.a,270, [arrow_center_x+self.control_img_size*2//2, arrow_center_y+self.control_img_size//2])
+
     def draw_instructions(self):
         self.margin = 72
         self.clear_screen()
@@ -92,8 +110,9 @@ class VisualView():
         self.draw_paragraph('The Game',72,pygame.Rect((self.margin, 48, self.width - self.margin*2, 300)))
         self.draw_paragraph('You are trapped in a labyrinth between the worlds of the  living and the dead, and have been cursed to remain here until you help the tormented souls find their peace. They must attone for their misdeeds, resolve thier regrets in life, and move on to the afterlife. Only then are you free of your duties.', 32, pygame.Rect((self.margin, 144, self.width - self.margin*2, 300)))
 
-        self.draw_image(self.arrows, [self.width//4-self.img_size*2//2, self.height//2-self.img_size//2])
-        self.draw_image(self.aswd, [3*self.width//4-self.img_size*2//2, self.height//2-self.img_size//2])
+        self.draw_aswd(self.width//4,self.height//2)
+
+        self.draw_arrow(3*self.width//4, self.height//2)
 
         self.draw_sentence('Press H for Home, Press Space to Start',36,[self.width//2, self.height - 96])
 
