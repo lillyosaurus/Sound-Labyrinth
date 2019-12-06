@@ -12,7 +12,10 @@ sitemap:
 ### Set up the environment
 Sound labrynth relies on several packages please run the following commands in a terminal window:
 
-1. `pip install pygame`
+1. `sudo apt install libespeak1`
+2. `pip install pygame`
+3. `pip install pyttsx3`
+
 
 
 
