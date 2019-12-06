@@ -10,6 +10,7 @@ class VisualView():
         self.width = self.map.pixel_size * 7
         self.height = self.map.pixel_size * 7
         self.img_size = 128
+        self.margin = 72
 
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("Sound Labyrinth")
@@ -25,14 +26,18 @@ class VisualView():
     def load_images(self):
         self.control_img_size = 72
         self.player = pygame.transform.scale(pygame.image.load('image/player.png'),(self.img_size,self.img_size))
-        self.arrows = self.wall = pygame.transform.scale(pygame.image.load('image/test_arrows.png'),(self.img_size*2,self.img_size))
-        self.aswd = self.wall = pygame.transform.scale(pygame.image.load('image/test_aswd.png'),(self.img_size*2,self.img_size))
+        self.wall = pygame.transform.scale(pygame.image.load('image/wall.png'),(self.img_size,self.img_size))
+        self.reaper = pygame.transform.scale(pygame.image.load('documents/NPCs/reaper/reaper.png'),(self.img_size,self.img_size))
+        self.fallen_ruler = pygame.transform.scale(pygame.image.load('documents/NPCs/fallen_ruler/image.png'),(self.img_size,self.img_size))
 
         # load ASWD
-        self.a = self.wall = pygame.transform.scale(pygame.image.load('image/controls/a.png'),(self.control_img_size,self.control_img_size))
-        self.s = self.wall = pygame.transform.scale(pygame.image.load('image/controls/s.png'),(self.control_img_size,self.control_img_size))
-        self.w = self.wall = pygame.transform.scale(pygame.image.load('image/controls/w.png'),(self.control_img_size,self.control_img_size))
-        self.d = self.wall = pygame.transform.scale(pygame.image.load('image/controls/d.png'),(self.control_img_size,self.control_img_size))
+        self.a  = pygame.transform.scale(pygame.image.load('image/controls/a.png'),(self.control_img_size,self.control_img_size))
+        self.s = pygame.transform.scale(pygame.image.load('image/controls/s.png'),(self.control_img_size,self.control_img_size))
+        self.w = pygame.transform.scale(pygame.image.load('image/controls/w.png'),(self.control_img_size,self.control_img_size))
+        self.d = pygame.transform.scale(pygame.image.load('image/controls/d.png'),(self.control_img_size,self.control_img_size))
+
+        #load arrow NEED TO ADD IN ARROW IMAGE
+        self.arrow = pygame.transform.scale(pygame.image.load('image/controls/a.png'),(self.control_img_size,self.control_img_size))
 
     def clear_screen(self):
         self.screen.fill((0,0,0))
@@ -98,26 +103,34 @@ class VisualView():
         self.draw_image(self.d, [aswd_center_x+self.control_img_size*2//2, aswd_center_y+self.control_img_size//2])
 
     def draw_arrow(self,arrow_center_x,arrow_center_y):
-        self.draw_rotated_image(self.a,90, [arrow_center_x-self.control_img_size*2//2, arrow_center_y+self.control_img_size//2])
-        self.draw_rotated_image(self.a,180, [arrow_center_x, arrow_center_y+self.control_img_size//2])
-        self.draw_rotated_image(self.a,0, [arrow_center_x, arrow_center_y-self.control_img_size//2])
-        self.draw_rotated_image(self.a,270, [arrow_center_x+self.control_img_size*2//2, arrow_center_y+self.control_img_size//2])
+        self.draw_rotated_image(self.arrow,90, [arrow_center_x-self.control_img_size*2//2, arrow_center_y+self.control_img_size//2])
+        self.draw_rotated_image(self.arrow,180, [arrow_center_x, arrow_center_y+self.control_img_size//2])
+        self.draw_rotated_image(self.arrow,0, [arrow_center_x, arrow_center_y-self.control_img_size//2])
+        self.draw_rotated_image(self.arrow,270, [arrow_center_x+self.control_img_size*2//2, arrow_center_y+self.control_img_size//2])
 
     def draw_instructions(self):
         self.margin = 72
         self.clear_screen()
 
         self.draw_paragraph('The Game',72,pygame.Rect((self.margin, 48, self.width - self.margin*2, 300)))
-        self.draw_paragraph('You are trapped in a labyrinth between the worlds of the  living and the dead, and have been cursed to remain here until you help the tormented souls find their peace. They must attone for their misdeeds, resolve thier regrets in life, and move on to the afterlife. Only then are you free of your duties.', 32, pygame.Rect((self.margin, 144, self.width - self.margin*2, 300)))
+        self.draw_paragraph('You are trapped in a labyrinth between the worlds of the  living and the dead, and have been cursed to remain here until you help the tormented souls find their peace. They must atone for their misdeeds, resolve their regrets in life, and move on to the afterlife. Only then are you free of your duties.', 32, pygame.Rect((self.margin, 144, self.width - self.margin*2, 300)))
 
         self.draw_aswd(self.width//4,self.height//2)
+        self.draw_sentence('Use ASWD keys to move',24,[self.width//4+48, self.height//2+160])
 
-        self.draw_arrow(3*self.width//4, self.height//2)
+        self.draw_arrow(3*self.width//4-self.control_img_size, self.height//2)
+        self.draw_sentence('Use arrow keys to ping',24,[3*self.width//4-48, self.height//2+160])
 
         self.draw_sentence('Press H for Home, Press Space to Start',36,[self.width//2, self.height - 96])
 
     def draw_credits(self):
-        self.draw_sentence('CREDITS GO HERE',36,[self.width//2, self.height//2])
+
+        '''CODE TO GENERATE REPRESENTITIVE IMAGES
+        self.draw_image(self.player, [self.width//2-self.img_size//2, self.height//2-self.img_size//2+48])
+        self.draw_image(self.fallen_ruler, [self.width//2-self.img_size//2+2*128, self.height//2-self.img_size//2+48])
+        '''
+        self.draw_paragraph('About Sound Labyrinth',72,pygame.Rect((self.margin, 48, self.width - self.margin*2, 300)))
+        self.draw_paragraph('Sound Labyrinth is an accessible computer game created for Software Design at Olin College of Engineering. We created this game with the intention of it being fully accessible to sighted and visually imaired players alike.', 32, pygame.Rect((self.margin, 144, self.width - self.margin*2, 300)))
         self.draw_sentence('Press H for Home',36,[self.width//2, self.height - 96])
 
     def close_screen(self):
