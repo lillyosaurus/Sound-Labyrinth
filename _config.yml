@@ -3,8 +3,8 @@ title:              Sound Labyrinth
 bio:                'An exploration in accessable videogaming'
 description:        "An exploration in accesable videogaming"
 locale:             en_US
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site
+baseurl: "/Sound-Labyrinth" # the subpath of your site, e.g. /blog
+url: "/Sound-Labyrinth" # the base hostname & protocol for your site
 
 # Comments
 disqus_shortname:   default
