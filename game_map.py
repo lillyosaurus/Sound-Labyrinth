@@ -24,7 +24,16 @@ def sample_map():
     return map_matrix
 
 class GameMap():
-    """Map of the game"""
+    """
+    The class which provides the map for the game with all needed objects
+
+    Attributes:
+    map -> map of the game in nested list
+    pixel_size -> length of each block that builds the game on the screen. All images are scaled to this size.
+    wall_group -> pygame Group that includes all the Wall object in the game
+    wall_list -> list of all Wall objects 
+    player -> Player object
+    """
 
     def __init__(self, current_map=sample_map()):
         """
@@ -42,6 +51,14 @@ class GameMap():
 
 
     def get_walls(self):
+        """
+        Figure out the location of each wall and creates Wall objects.
+        Number 2 in nested list indicates a wall.
+        Rescale all the images so that it can fit the pixel_size attribute.
+
+        Return:
+        [Wall object, Wall object, ....] -> list of Wall objects
+        """
         x = 0
         y = 0
         walls = []
@@ -59,6 +76,14 @@ class GameMap():
         return walls
 
     def get_player(self):
+        """
+        Figure out the location of player and create Player object.
+        Number 3 in nested list indicates a wall.
+        Rescale all the images so that it can fit the pixel_size attribute.
+
+        Return:
+        Player object
+        """
         x = 0
         y = 0
         for row in self.map:
@@ -73,11 +98,25 @@ class GameMap():
         return player
 
     def player_wall_collision(self):
+        """
+        Check whether the Player object is colliding with any Wall object
+
+        Return:
+        boolean -> True or False
+        """
         return self.player.collision_group(self.wall_group)
 
-    #TODO: return distance and wall hit
-
     def ping_from_player(self, direction, limit):
+        """
+        Create a Ping object to check the distance between Player and closest Wall object in range. 
+
+        Arguments:
+        direction-> the direction to send the Ping object
+        limit -> limit in blocks the maximum distance ping can travel
+
+        Return:
+        [int, Wall Object] -> returns the distance in int, and the Colliding wall object. Returns [None, None] if no wall was hit. 
+        """
         ping = game_object.Ping(self.player)
         pixel_limit = self.pixel_size * limit
         x = 0
@@ -112,6 +151,12 @@ class GameMap():
         return [None,None]
 
     def at_block(self):
+        """
+        Check whether the Player object is in the middle of the block
+
+        Return:
+        boolean -> True or False
+        """
         if self.player.rect.x % self.pixel_size == 0:
             if self.player.rect.y % self.pixel_size == 0:
                 return True
