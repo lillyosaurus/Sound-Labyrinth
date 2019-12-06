@@ -4,7 +4,7 @@ bio:                'An exploration in accessable videogaming'
 description:        "An exploration in accesable videogaming"
 locale:             en_US
 baseurl: "/Sound-Labyrinth" # the subpath of your site, e.g. /blog
-url: "/Sound-Labyrinth" # the base hostname & protocol for your site
+url: "" # the base hostname & protocol for your site
 
 # Comments
 disqus_shortname:   default
@@ -14,7 +14,7 @@ analytics-id:       "default"
 twitter:            default
 facebook:           default
 instagram:          default
-github:             "https://github.com/sd19fall/Sound-Labyrinth"
+github:             "sd19fall/Sound-Labyrinth"
 
 # personal
 location:           Los Angeles, CA
