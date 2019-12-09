@@ -5,7 +5,9 @@ Sound Labrynth is a videogame which aims to provide the same experience through 
 This game uses the Pygame library, version 1.9.6. In order to run the scripts, you'll need to install Pygame, Pyttsx3, and Libespeak1. Do this by running the following command in Terminal: 
 
 > pip install pygame
+
 > pip install pyttsx3
+
 > sudo apt install libespeak1
 
 To install this game, download this repository using the clone or download button towards the top of the github repository home page.
