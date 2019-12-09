@@ -264,6 +264,17 @@ class NPC(GameObject):
         file = open(os.getcwd()+"/documents/NPCs/" + self.directory + "/" + attribute + ".txt")
         return eval(file.read())
 
+    def scale_image(self, new_size):
+        """
+        Scale the image to a desired size
+
+        Arguments:
+        new_size -> the length in pixels of one side of the scaled image
+        """
+        self.image = pygame.transform.scale(self.image, (new_size, new_size))
+        self.original_image = pygame.transform.scale(self.original_image, (new_size, new_size))
+        self.rect.size = (new_size, new_size)
+        
     def update_dialogue(self):
         """A method which handels loading the dialogue lines of the NPC"""
 
