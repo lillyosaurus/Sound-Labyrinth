@@ -5,6 +5,7 @@ import pygame
 import visual
 import game_map
 import game_object
+import pyttsx3
 
 class Model:
 
@@ -78,6 +79,10 @@ class Model:
         #Initializes current time object
         current_time = 0
         animation_step = 0
+        audio_engine = pyttsx3.init()
+        audio_engine.setProperty('rate',200)
+        audio_engine.setProperty('rate',0.9)
+        audio_engine.setProperty('voice', 'english+f1')
 
         while self.run:
             if self.show_home_screen == True:
@@ -100,9 +105,13 @@ class Model:
 
             elif self.show_credits == True:
                 self.view.update_screen('credits')
+                self.view.audio.string_to_speach('About Sound Labyrinth',audio_engine)
+                self.view.audio.string_to_speach('Sound Labyrinth is an accessible videogame which is designed to provide the same experience to people with a range of sensory abilities. People with a visual impairment can navigate the game via audio input, while people who have hearing impairments can navigate with visual input.',audio_engine)
+                self.view.audio.string_to_speach('This game was created by Kyle Bertram, SeungU Lyu and Tim Novak as the final project for Software Design at Olin College of Engineering.',audio_engine)
                 self.controller.read_input()
                 if self.controller.hs_keys['H']:
                     self.show_screen('home_screen')
+                    speak = False
 
             if self.view.visual.game_on == False:
                     self.run = False

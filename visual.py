@@ -113,7 +113,7 @@ class VisualView():
         self.clear_screen()
 
         self.draw_paragraph('The Game',72,pygame.Rect((self.margin, 48, self.width - self.margin*2, 300)))
-        self.draw_paragraph('You are trapped in a labyrinth between the worlds of the  living and the dead, and have been cursed to remain here until you help the tormented souls find their peace. They must atone for their misdeeds, resolve their regrets in life, and move on to the afterlife. Only then are you free of your duties.', 32, pygame.Rect((self.margin, 144, self.width - self.margin*2, 300)))
+        self.draw_paragraph("You find yourself trapped in the labyrinth, an endless maze between the world of the living and the dead. A place where souls are kept if they still have unfinished business, ties to the world or regrets for what they've done. In order to resolve your past life, you must now learn to help the other trapped souls move on. Only then can you yourself pass on to the afterlife.", 36, pygame.Rect((self.margin, 144, self.width - self.margin*2, 300)))
 
         self.draw_aswd(self.width//4,self.height//2)
         self.draw_sentence('Use ASWD keys to move',24,[self.width//4+48, self.height//2+160])
@@ -124,13 +124,14 @@ class VisualView():
         self.draw_sentence('Press H for Home, Press Space to Start',36,[self.width//2, self.height - 96])
 
     def draw_credits(self):
-
-        '''CODE TO GENERATE REPRESENTITIVE IMAGES
+        """
+        #CODE TO GENERATE REPRESENTITIVE IMAGES
         self.draw_image(self.player, [self.width//2-self.img_size//2, self.height//2-self.img_size//2+48])
         self.draw_image(self.fallen_ruler, [self.width//2-self.img_size//2+2*128, self.height//2-self.img_size//2+48])
-        '''
-        self.draw_paragraph('About Sound Labyrinth',72,pygame.Rect((self.margin, 48, self.width - self.margin*2, 300)))
-        self.draw_paragraph('Sound Labyrinth is an accessible computer game created for Software Design at Olin College of Engineering. We created this game with the intention of it being fully accessible to sighted and visually imaired players alike.', 32, pygame.Rect((self.margin, 144, self.width - self.margin*2, 300)))
+        """
+        self.draw_paragraph('About Sound Labyrinth',72,pygame.Rect((self.margin, 48, self.width - self.margin*2, 200)))
+        self.draw_paragraph('Sound Labyrinth is an accessible videogame which is designed to provide the same experience to people with a range of sensory abilities. People with a visual impairment can navigate the game via audio input, while people who have hearing impairments can navigate with visual input.', 36, pygame.Rect((self.margin, 144, self.width - self.margin*2, 300)))
+        self.draw_paragraph('This game was created by Kyle Bertram, SeungU Lyu and Tim Novak as the final project for Software Design at Olin College of Engineering.', 36, pygame.Rect((self.margin, 144 + 196 + 24, self.width - self.margin*2, 300)))
         self.draw_sentence('Press H for Home',36,[self.width//2, self.height - 96])
 
     def close_screen(self):

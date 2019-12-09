@@ -41,17 +41,32 @@ class Audio(object):
             channel = sound.play()
             channel.set_volume(volume,0)
 
-    def string_to_speach(self,string,voice):
-        pass
+    def string_to_speach(self,string,engine):
+        engine.say(string)
+        engine.runAndWait()
+        # engine = pyttsx3.init()
+        # engine.connect('started-utterance', self.onStart)
+        # engine.connect('started-word', self.onWord)
+        # engine.connect('finished-utterance', self.onEnd)
+        # engine.say(string)
+        # engine.runAndWait()
+
+    # def onStart(self,name):
+    #     print ('starting', name)
+    # def onWord(self,name, location, length):
+    #     print ('word', name, location, length)
+    # def onEnd(self,name, completed):
+    #     print ('finishing', name, completed)
+
 
 
 
 if __name__ == "__main__":
-    import pyttsx3;
     engine = pyttsx3.init();
     engine.say("I will speak this text")
     engine.runAndWait()
 ## Walking Audio
+
 """
     pygame.mixer.init()
     ping_sound = pygame.mixer.Sound("Sounds/ping_2.wav")
