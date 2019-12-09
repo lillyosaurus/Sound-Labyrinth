@@ -17,7 +17,9 @@ class Model:
         self.ping_delay = 600
         self.previous_time = 0
         self.turned_on_wall = None
+        self.turned_on_NPC = None
         self.wall_transparency = 0
+        self.NPC_transparency = 0
 
         self.show_home_screen = True
         self.show_instructions = False
@@ -38,6 +40,19 @@ class Model:
                 #self.view.play_echo(round(dist),direction, self.view.audio.hollow_sound)
                 self.turned_on_wall = ping_check[0]
                 self.wall_transparency = 30
+    def NPC_collision_ping(self,direction,current_time):
+        print('going the direction')
+        ping_check = self.map.ping_from_player(direction,1)
+        dist = ping_check[1]
+        if current_time - self.previous_time >= self.ping_delay:
+            print('updating_time')
+            print(dist)
+            self.previous_time = current_time
+            if dist != None:
+                print('performing action')
+                #self.view.play_echo(round(dist),direction, self.view.audio.hollow_sound)
+                self.turned_on_NPC = ping_check[0]
+                self.NPC_transparency = 30
 
     def process_ping(self,direction,sight_range,current_time):
         if self.controller.ping_keys[direction]:
@@ -53,6 +68,8 @@ class Model:
                     self.view.play_echo(round(dist),direction, self.view.audio.hollow_sound)
                     self.turned_on_wall = ping_check[0]
                     self.wall_transparency = 30
+                    self.turned_on_NPC = ping_check[0]
+                    self.NPC_transparency = 30
 
     def show_screen(self,screen):
         """Updates boolean to display the correct screen
@@ -146,6 +163,9 @@ class Model:
                     if self.map.player_wall_collision() != None:
                             self.map.player.rect.move_ip(0,speed)
                             self.wall_collision_ping('front',current_time)
+                    elif self.map.player_NPC_collision() != None:
+                            self.map.player.rect.move_ip(0,speed)
+                            self.NPC_collision_ping('front',current_time)
                     else:
                         animation_step += 1
                         if animation_step % 2 == 0:
@@ -162,6 +182,9 @@ class Model:
                     if self.map.player_wall_collision() != None:
                             self.map.player.rect.move_ip(0,-speed)
                             self.wall_collision_ping('back',current_time)
+                    elif self.map.player_NPC_collision() != None:
+                            self.map.player.rect.move_ip(0,speed)
+                            self.NPC_collision_ping('back',current_time)
                     else:
                         animation_step += 1
                         if animation_step % 2 == 0:
@@ -174,6 +197,9 @@ class Model:
                     if self.map.player_wall_collision() != None:
                             self.map.player.rect.move_ip(speed,0)
                             self.wall_collision_ping('left',current_time)
+                    elif self.map.player_NPC_collision() != None:
+                            self.map.player.rect.move_ip(0,speed)
+                            self.NPC_collision_ping('left',current_time)
                     else:
                         animation_step += 1
                         if animation_step % 2 == 0:
@@ -186,6 +212,9 @@ class Model:
                     if self.map.player_wall_collision() != None:
                             self.map.player.rect.move_ip(-speed,0)
                             self.wall_collision_ping('right',current_time)
+                    elif self.map.player_NPC_collision() != None:
+                            self.map.player.rect.move_ip(0,speed)
+                            self.NPC_collision_ping('right',current_time)
                     else:
                         animation_step += 1
                         if animation_step % 2 == 0:
@@ -195,7 +224,11 @@ class Model:
                 if self.turned_on_wall != None and self.wall_transparency >=0:
                     self.turned_on_wall.set_transparency(1 + self.wall_transparency * 8)
                     self.wall_transparency -= 1
-                    print('reduce wall transparency' + str(self.wall_transparency))
+                    print('reduce wall transparency' + str(self.NPC_transparency))
+                if self.turned_on_NPC != None and self.NPC_transparency >=0:
+                    self.turned_on_NPC.set_transparency(1 + self.NPC_transparency * 8)
+                    self.NPC_transparency -= 1
+                    print('reduce NPC transparency' + str(self.NPC_transparency))
                 #update visuals
                 self.view.update_screen('game')
                 if self.view.visual.game_on == False:
