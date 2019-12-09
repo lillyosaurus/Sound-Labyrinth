@@ -258,6 +258,7 @@ class NPC(GameObject):
         self.dialogue = self.load_file("dialogue")
         self.key = self.load_file("keys")
         self.index_position = 0
+        self.set_transparency(1)
 
     def load_file(self,attribute):
         """Pull an atribute from the designated file"""
