@@ -13,11 +13,11 @@ def sample_map():
         [0, 0, 0, 2, 1, 1, 1, 1, 1, 2, 0],
         [0, 2, 2, 2, 2, 2, 2, 2, 1, 2, 0],
         [0, 2, 1, 2, 0, 0, 0, 2, 1, 2, 0],
-        [0, 2, 1, 2, 0, 0, 0, 2, 1, 2, 0],
         [0, 2, 1, 2, 2, 2, 2, 2, 1, 2, 0],
-        [0, 2, 1, 1, 1, 3, 1, 1, 1, 2, 0],
+        [0, 2, 1, 2, 2, 4, 2, 2, 1, 2, 0],
+        [0, 2, 1, 1, 1, 1, 1, 1, 1, 2, 0],
         [0, 2, 2, 2, 2, 1, 2, 2, 2, 2, 0],
-        [0, 0, 0, 0, 2, 1, 2, 0, 0, 0, 0],
+        [0, 0, 0, 0, 2, 3, 2, 0, 0, 0, 0],
         [0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0]
     ]
 
@@ -45,10 +45,16 @@ class GameMap():
         self.map = current_map
         self.pixel_size = 128
         self.wall_group = pygame.sprite.Group()
+        self.NPC_group = pygame.sprite.Group()
+        
+        #a list of the NPCs and their directories
+        self.NPC_dict = {4:"reaper"}
+        
         self.wall_list = self.get_walls()
+        self.NPC_list = self.get_NPCs()
         self.player = self.get_player()
         self.player.speed = self.pixel_size/16
-
+        
 
     def get_walls(self):
         """
@@ -78,7 +84,7 @@ class GameMap():
     def get_player(self):
         """
         Figure out the location of player and create Player object.
-        Number 3 in nested list indicates a wall.
+        Number 3 in nested list indicates a player.
         Rescale all the images so that it can fit the pixel_size attribute.
 
         Return:
@@ -96,7 +102,31 @@ class GameMap():
             y += self.pixel_size
 
         return player
+    
+    def get_NPCs(self):
+        """
+        Figure out the location of each wall and creates Wall objects.
+        Number 4 in nested list indicates a NPC.
+        Rescale all the images so that it can fit the pixel_size attribute.
 
+        Return:
+        [NPC object, NPC object, ....] -> list of NPC objects
+        """
+        x = 0
+        y = 0
+        NPCs = []
+        for row in self.map:
+            for column in row:
+                if column >= 4:
+                    NPC = game_object.NPC(x,y,self.NPC_dict[column])
+                    NPC.scale_image(self.pixel_size)
+                    self.NPC_group.add(NPC)
+                    NPCs.append(NPC)
+                x += self.pixel_size
+            x = 0
+            y += self.pixel_size
+
+        return NPCs
     def player_wall_collision(self):
         """
         Check whether the Player object is colliding with any Wall object
@@ -105,6 +135,15 @@ class GameMap():
         boolean -> True or False
         """
         return self.player.collision_group(self.wall_group)
+
+    def player_NPC_collision(self):
+        """
+        Check whether the Player object is colliding with any NPC object
+
+        Return:
+        boolian -> True or False
+        """
+        return self.player.collision_group(self.NPC_group)
 
     def ping_from_player(self, direction, limit):
         """
@@ -141,10 +180,18 @@ class GameMap():
         for i in range(pixel_limit):
             ping.rect.move_ip(x, y)
             ping_wall = ping.collision_group(self.wall_group)
+            
             if ping_wall != None:
                 blocks_away = (i + offset + self.pixel_size/2)/self.pixel_size
                 ping_wall.image.set_alpha(255)
                 return_list.append(ping_wall)
+                return_list.append(blocks_away)
+                return return_list
+            ping_NPC = ping.collision_group(self.NPC_group)
+            if ping_NPC != None:
+                blocks_away = (i + offset + self.pixel_size/2)/self.pixel_size
+                ping_NPC.image.set_alpha(255)
+                return_list.append(ping_NPC)
                 return_list.append(blocks_away)
                 return return_list
 

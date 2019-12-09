@@ -250,9 +250,10 @@ class NPC(GameObject):
     key -> a dictionary storing the checkpoint items of the player to advance dialogue
     index_position -> a tracker to track what point the character is through their dialogue"""
 
-    def __init__(self, directory):
+    def __init__(self,x,y, directory):
         """Set the starting values of the attributes"""
         super().__init__(os.getcwd()+"/documents/NPCs/" + directory + "/image.png")
+        super().set_position(x,y)
         self.directory = directory
         self.dialogue = self.load_file("dialogue")
         self.key = self.load_file("keys")

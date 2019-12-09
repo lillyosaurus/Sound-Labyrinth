@@ -27,7 +27,7 @@ class VisualView():
         self.control_img_size = 72
         self.player = pygame.transform.scale(pygame.image.load('image/player.png'),(self.img_size,self.img_size))
         self.wall = pygame.transform.scale(pygame.image.load('image/wall.png'),(self.img_size,self.img_size))
-        self.reaper = pygame.transform.scale(pygame.image.load('documents/NPCs/reaper/reaper.png'),(self.img_size,self.img_size))
+        self.reaper = pygame.transform.scale(pygame.image.load('documents/NPCs/reaper/image.png'),(self.img_size,self.img_size))
         self.fallen_ruler = pygame.transform.scale(pygame.image.load('documents/NPCs/fallen_ruler/image.png'),(self.img_size,self.img_size))
 
         # load ASWD
@@ -50,6 +50,8 @@ class VisualView():
         y_offset = int(self.height/2) - self.map.player.rect.y - self.map.pixel_size/2
         for wall in self.map.wall_list:
             wall.draw_offset(self.screen, x_offset, y_offset)
+        for NPC in self.map.NPC_list:
+            NPC.draw_offset(self.screen,x_offset, y_offset)
         self.map.player.draw_offset(self.screen, x_offset, y_offset)
 
     def draw_sentence(self,sentence,size,rect_center):
