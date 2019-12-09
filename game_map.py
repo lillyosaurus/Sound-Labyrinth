@@ -41,7 +41,6 @@ class GameMap():
 
         current_map: map depicted as nested list
         """
-        # map of the game in matrix form.
         self.map = current_map
         self.pixel_size = 128
         self.wall_group = pygame.sprite.Group()
@@ -147,14 +146,14 @@ class GameMap():
 
     def ping_from_player(self, direction, limit):
         """
-        Create a Ping object to check the distance between Player and closest Wall object in range. 
+        Create a Ping object to check the distance between Player and closest Wall or NPC object in range. 
 
         Arguments:
         direction-> the direction to send the Ping object
         limit -> limit in blocks the maximum distance ping can travel
 
         Return:
-        [int, Wall Object] -> returns the distance in int, and the Colliding wall object. Returns [None, None] if no wall was hit. 
+        [int, Object] -> returns the distance in int, and the Colliding wall or NPC object. Returns [None, None] if nothing was hit. 
         """
         ping = game_object.Ping(self.player)
         pixel_limit = self.pixel_size * limit
@@ -210,6 +209,7 @@ class GameMap():
         return False
 
     def intro_pages(self, title = True, instructions = False, info = False):
+
         if title == True:
             # draw title screen
             pass

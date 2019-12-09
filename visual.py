@@ -3,9 +3,26 @@ import os
 import textrect
 
 class VisualView():
-    """Drawing Class for the game"""
+    """
+    The class used to display the game on to a screen.
+
+    Attributes:
+    map -> GameMap object with all required objects to play the game
+    width -> width of the screen in pixels
+    height -> height of the screen in pixels
+    img_size -> size to scale images when loaded
+    margin -> margin in pixels
+    screen -> initialized screen for display with width and height
+    game_on -> boolean to check whether the game is running or not
+    font_type -> font used to display dialogues   
+    """
 
     def __init__(self, gamemap):
+        """
+        Initializes VisualView object
+
+        gamemap: GameMap object
+        """
         self.map = gamemap
         self.width = self.map.pixel_size * 7
         self.height = self.map.pixel_size * 7
@@ -24,6 +41,9 @@ class VisualView():
         self.tick = 0
 
     def load_images(self):
+        """
+        Load all the images needed to show instruction page. 
+        """
         self.control_img_size = 72
         self.player = pygame.transform.scale(pygame.image.load('image/player.png'),(self.img_size,self.img_size))
         self.wall = pygame.transform.scale(pygame.image.load('image/wall.png'),(self.img_size,self.img_size))
@@ -40,12 +60,22 @@ class VisualView():
         self.arrow = pygame.transform.scale(pygame.image.load('image/controls/a.png'),(self.control_img_size,self.control_img_size))
 
     def clear_screen(self):
+        """
+        Clear the screen by filling the whole screen with color black 
+        """
         self.screen.fill((0,0,0))
 
     def refresh_screen(self):
+        """
+        Refresh the screen
+        """
         pygame.display.flip()
 
     def draw_screen(self):
+        """
+        Draw all objects inside the GameMap object with respect to the Player object. 
+        Using right values for offset, Player is always showed in the center of the screen.
+        """
         x_offset = int(self.width/2) - self.map.player.rect.x - self.map.pixel_size/2
         y_offset = int(self.height/2) - self.map.player.rect.y - self.map.pixel_size/2
         for wall in self.map.wall_list:
@@ -55,6 +85,14 @@ class VisualView():
         self.map.player.draw_offset(self.screen, x_offset, y_offset)
 
     def draw_sentence(self,sentence,size,rect_center):
+        """
+        Draw sentence onto the screen. 
+
+        Arguments:
+        sentence -> string to show on the screen
+        size -> size of the font
+        rect_center -> center coordinate to show the sentence
+        """
         pure_white = (255, 255, 255)
         white = (220,220,220)
         black = (0, 0, 0)
@@ -66,29 +104,59 @@ class VisualView():
         textRect.center = (X,Y)
         self.screen.blit(text,textRect)
 
-    def draw_paragraph(self,sentance,size,rect):
+    def draw_paragraph(self,sentence,size,rect):
+        """
+        Draw paragraph onto the screen. 
+        Automatically aligns sentence so that they don't go out of border.
+
+        Arguments:
+        sentence -> string to show on the screen
+        size -> size of the font
+        rect -> rectangle to put the paragraph in
+        """
         white = (220,220,220)
         black = (0, 0, 0)
         font = pygame.font.Font(self.font_type,size)
 
-        my_rect = textrect.render_textrect(sentance,font,rect,white,black,justification = 0)
+        my_rect = textrect.render_textrect(sentence,font,rect,white,black,justification = 0)
         self.screen.blit(my_rect, rect.topleft)
 
     def draw_image(self,image,rect_center):
+        """
+        Draw image onto the screen. 
+        
+        Arguments:
+        image -> image to draw
+        rect_center -> center coordinate to show the image
+        """
         self.screen.blit(image,rect_center)
 
     def draw_rotated_image(self,image,angle,rect_center):
-        """ Rotates an image counterclockwise with units of degrees"""
+        """
+        Rotates an image counterclockwise with units of degrees
+        """
         new_image = pygame.transform.rotate(image,angle)
         self.draw_image(new_image,rect_center)
 
-    def blink_text(self,sentance,size,rect_center,time):
+    def blink_text(self,sentence,size,rect_center,time):
+        """
+        Blink a specific sentence with time interval
+        
+        Arguments:
+        sentence -> string to show on the screen
+        size -> size of the font
+        rect_center -> center coordinate to show the sentence
+        time -> time interval in milisecond
+        """
         if pygame.time.get_ticks() < self.tick + time:
-            self.draw_sentence('Press I for Instructions, Press C for Credits, Press Space to Start',36,rect_center)
+            self.draw_sentence(sentence,size,rect_center)
         elif pygame.time.get_ticks() > self.tick + time*2:
             self.tick = pygame.time.get_ticks()
 
     def draw_home_screen(self):
+        """
+        Draw home screen with title, player image, and simple blinking instructions
+        """
         self.clear_screen()
         self.draw_sentence('Sound',96,[self.width//2,self.height//3-48])
         self.draw_sentence('Labyrinth',96,[self.width//2,self.height//3+60])
@@ -99,18 +167,27 @@ class VisualView():
         self.blink_text('Press I for Instructions, Press C for Credits, Press Space to Start',36,[self.width//2, self.height - 96], 1000)
 
     def draw_aswd(self,aswd_center_x,aswd_center_y):
+        """
+        Draw ASWD key image 
+        """
         self.draw_image(self.a, [aswd_center_x-self.control_img_size*2//2, aswd_center_y+self.control_img_size//2])
         self.draw_image(self.s, [aswd_center_x, aswd_center_y+self.control_img_size//2])
         self.draw_image(self.w, [aswd_center_x, aswd_center_y-self.control_img_size//2])
         self.draw_image(self.d, [aswd_center_x+self.control_img_size*2//2, aswd_center_y+self.control_img_size//2])
 
     def draw_arrow(self,arrow_center_x,arrow_center_y):
+        """
+        Draw arrow key image
+        """
         self.draw_rotated_image(self.arrow,90, [arrow_center_x-self.control_img_size*2//2, arrow_center_y+self.control_img_size//2])
         self.draw_rotated_image(self.arrow,180, [arrow_center_x, arrow_center_y+self.control_img_size//2])
         self.draw_rotated_image(self.arrow,0, [arrow_center_x, arrow_center_y-self.control_img_size//2])
         self.draw_rotated_image(self.arrow,270, [arrow_center_x+self.control_img_size*2//2, arrow_center_y+self.control_img_size//2])
 
     def draw_instructions(self):
+        """
+        Draw instruction screen
+        """
         self.margin = 72
         self.clear_screen()
 
@@ -126,7 +203,9 @@ class VisualView():
         self.draw_sentence('Press H for Home, Press Space to Start',36,[self.width//2, self.height - 96])
 
     def draw_credits(self):
-
+        """
+        Draw credit screen
+        """
         '''CODE TO GENERATE REPRESENTITIVE IMAGES
         self.draw_image(self.player, [self.width//2-self.img_size//2, self.height//2-self.img_size//2+48])
         self.draw_image(self.fallen_ruler, [self.width//2-self.img_size//2+2*128, self.height//2-self.img_size//2+48])
@@ -136,6 +215,10 @@ class VisualView():
         self.draw_sentence('Press H for Home',36,[self.width//2, self.height - 96])
 
     def close_screen(self):
+        """
+        Check whether the use pressed close button on the window
+        If clicked, set game_on to False so that the game is not being played anymore.
+        """
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.game_on = False
