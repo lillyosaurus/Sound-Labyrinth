@@ -21,6 +21,7 @@ class Model:
         self.wall_transparency = 0
         self.NPC_transparency = 0
 
+        self.audio_loop = True
         self.show_home_screen = True
         self.show_instructions = False
         self.show_credits = False
@@ -40,6 +41,7 @@ class Model:
                 #self.view.play_echo(round(dist),direction, self.view.audio.hollow_sound)
                 self.turned_on_wall = ping_check[0]
                 self.wall_transparency = 30
+
     def NPC_collision_ping(self,direction,current_time):
         print('going the direction')
         ping_check = self.map.ping_from_player(direction,1)
@@ -77,6 +79,8 @@ class Model:
         The function sets all screen display booleans to false and takes the referenced display screen and sets that boolean to be true
 
         """
+        self.audio_loop = True
+
         self.show_home_screen = False
         self.show_instructions = False
         self.show_credits = False
@@ -96,6 +100,8 @@ class Model:
         #Initializes current time object
         current_time = 0
         animation_step = 0
+        audio_loop = True
+        instruction_loop = True
         audio_engine = pyttsx3.init()
         audio_engine.setProperty('rate',200)
         audio_engine.setProperty('rate',0.9)
@@ -104,6 +110,12 @@ class Model:
         while self.run:
             if self.show_home_screen == True:
                 self.view.update_screen('home_screen')
+                if self.audio_loop == True:
+                    self.view.audio.string_to_speach('Sound Labyrinth',audio_engine)
+                    self.view.audio.string_to_speach('Image of Footsteps',audio_engine)
+                    self.view.audio.string_to_speach('Created for Software Design in the Fall of 2019 by Kyle Bertram, SeungU Lyu and Tim Novak ',audio_engine)
+                    self.view.audio.string_to_speach('Press I for Instructions, Press C for credits, Press Space to play', audio_engine)
+                    self.audio_loop = False
                 self.controller.read_input()
                 if self.controller.hs_keys['I']:
                     self.show_screen('instructions')
@@ -114,21 +126,31 @@ class Model:
 
             elif self.show_instructions == True:
                 self.view.update_screen('instructions')
+                if self.audio_loop == True:
+                    self.view.audio.string_to_speach('The Game',audio_engine)
+                    self.view.audio.string_to_speach("You find yourself trapped in the labyrinth, an endless maze between the world of the living and the dead. A place where souls are kept if they still have unfinished business, ties to the world or regrets for what they've done. In order to resolve your past life, you must now learn to help the other trapped souls move on. Only then can you yourself pass on to the afterlife.",audio_engine)
+                    self.view.audio.string_to_speach('In the game you will navigate using echolocation, and you can see three meters in any direction. Use the A S W D keys to move in a direction, and use the arrow keys to ping in a direction',audio_engine)
+                    self.view.audio.string_to_speach('Press C for credits, Press H to return to the Home screen, Press Space to play', audio_engine)
+                    self.audio_loop = False
                 self.controller.read_input()
                 if self.controller.hs_keys['H']:
                     self.show_screen('home_screen')
                 elif self.controller.hs_keys['space']:
                     self.show_screen('game')
+                elif self.controller.hs_keys['C']:
+                        self.show_screen('credits')
 
             elif self.show_credits == True:
                 self.view.update_screen('credits')
-                self.view.audio.string_to_speach('About Sound Labyrinth',audio_engine)
-                self.view.audio.string_to_speach('Sound Labyrinth is an accessible videogame which is designed to provide the same experience to people with a range of sensory abilities. People with a visual impairment can navigate the game via audio input, while people who have hearing impairments can navigate with visual input.',audio_engine)
-                self.view.audio.string_to_speach('This game was created by Kyle Bertram, SeungU Lyu and Tim Novak as the final project for Software Design at Olin College of Engineering.',audio_engine)
+                if self.audio_loop == True:
+                    self.view.audio.string_to_speach('About Sound Labyrinth',audio_engine)
+                    self.view.audio.string_to_speach('Sound Labyrinth is an accessible videogame which is designed to provide the same experience to people with a range of sensory abilities. People with a visual impairment can navigate the game via audio input, while people who have hearing impairments can navigate with visual input.',audio_engine)
+                    self.view.audio.string_to_speach('This game was created by Kyle Bertram, SeungU Lyu and Tim Novak as the final project for Software Design at Olin College of Engineering.',audio_engine)
+                    self.view.audio.string_to_speach('Press H to return to the home screen', audio_engine)
+                    self.audio_loop = False
                 self.controller.read_input()
                 if self.controller.hs_keys['H']:
                     self.show_screen('home_screen')
-                    speak = False
 
             if self.view.visual.game_on == False:
                     self.run = False

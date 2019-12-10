@@ -153,19 +153,6 @@ class VisualView():
         elif pygame.time.get_ticks() > self.tick + time*2:
             self.tick = pygame.time.get_ticks()
 
-    def draw_home_screen(self):
-        """
-        Draw home screen with title, player image, and simple blinking instructions
-        """
-        self.clear_screen()
-        self.draw_sentence('Sound',96,[self.width//2,self.height//3-48])
-        self.draw_sentence('Labyrinth',96,[self.width//2,self.height//3+60])
-        self.draw_image(self.player, [self.width//2-self.img_size//2, self.height//2-self.img_size//2+48])
-        self.draw_sentence('Software Design - Fall 2019',48,[self.width//2, 3*self.height//4-30])
-        self.draw_sentence('Kyle Bertram  SeungU Lyu Tim Novak',36,[self.width//2, 3*self.height//4+30])
-        self.draw_sentence('Kyle Bertram  SeungU Lyu Tim Novak',36,[self.width//2, 3*self.height//4+30])
-        self.blink_text('Press I for Instructions, Press C for Credits, Press Space to Start',36,[self.width//2, self.height - 96], 1000)
-
     def draw_aswd(self,aswd_center_x,aswd_center_y):
         """
         Draw ASWD key image
@@ -184,6 +171,20 @@ class VisualView():
         self.draw_rotated_image(self.arrow,0, [arrow_center_x, arrow_center_y-self.control_img_size//2])
         self.draw_rotated_image(self.arrow,270, [arrow_center_x+self.control_img_size*2//2, arrow_center_y+self.control_img_size//2])
 
+    def draw_home_screen(self):
+        """
+        Draw home screen with title, player image, and simple blinking instructions
+        """
+        self.clear_screen()
+        self.draw_sentence('Sound',96,[self.width//2,self.height//3-48])
+        self.draw_sentence('Labyrinth',96,[self.width//2,self.height//3+60])
+        self.draw_image(self.player, [self.width//2-self.img_size//2, self.height//2-self.img_size//2+48])
+        self.draw_sentence('Software Design - Fall 2019',48,[self.width//2, 3*self.height//4-30])
+        self.draw_sentence('Kyle Bertram  SeungU Lyu Tim Novak',36,[self.width//2, 3*self.height//4+30])
+        self.draw_sentence('Kyle Bertram  SeungU Lyu Tim Novak',36,[self.width//2, 3*self.height//4+30])
+        #self.blink_text('Press I for Instructions, Press C for Credits, Press Space to Start',36,[self.width//2, self.height - 96], 1000)
+        self.draw_sentence('Press I for Instructions, Press C for Credits, Press Space to Play',36,[self.width//2, self.height - 96])
+
     def draw_instructions(self):
         """
         Draw instruction screen
@@ -194,13 +195,15 @@ class VisualView():
         self.draw_paragraph('The Game',72,pygame.Rect((self.margin, 48, self.width - self.margin*2, 300)))
         self.draw_paragraph("You find yourself trapped in the labyrinth, an endless maze between the world of the living and the dead. A place where souls are kept if they still have unfinished business, ties to the world or regrets for what they've done. In order to resolve your past life, you must now learn to help the other trapped souls move on. Only then can you yourself pass on to the afterlife.", 36, pygame.Rect((self.margin, 144, self.width - self.margin*2, 300)))
 
-        self.draw_aswd(self.width//4,self.height//2)
-        self.draw_sentence('Use ASWD keys to move',24,[self.width//4+48, self.height//2+160])
+        self.draw_paragraph('In the game you will navigate using echolocation, and are able to see three meters in any direction',36,pygame.Rect((self.margin, self.height//2-48, self.width - self.margin*2, 300)))
 
-        self.draw_arrow(3*self.width//4-self.control_img_size, self.height//2)
-        self.draw_sentence('Use arrow keys to ping',24,[3*self.width//4-48, self.height//2+160])
+        self.draw_aswd(self.width//4,self.height//2+120)
+        self.draw_sentence('Use ASWD keys to move',24,[self.width//4+48, self.height//2+160+120])
 
-        self.draw_sentence('Press H for Home, Press Space to Start',36,[self.width//2, self.height - 96])
+        self.draw_arrow(3*self.width//4-self.control_img_size, self.height//2+120)
+        self.draw_sentence('Use arrow keys to ping',24,[3*self.width//4-48, self.height//2+160+120])
+
+        self.draw_sentence('Press C for Credits, Press H for Home, Press Space to Start',36,[self.width//2, self.height - 96])
 
     def draw_credits(self):
         """
