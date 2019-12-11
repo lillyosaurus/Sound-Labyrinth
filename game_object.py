@@ -189,7 +189,7 @@ class Player(GameObject):
         for i in range(5):
             image = pygame.image.load(os.getcwd()+"/image/player"+str(i+1)+".png")
             self.animation_right.append(image)
-    
+
     def scale_image(self, new_size):
         """
         Scale the image to a desired size
@@ -205,7 +205,7 @@ class Player(GameObject):
             self.animation_up[i] = pygame.transform.scale(self.animation_up[i], (new_size, new_size))
             self.animation_right[i] = pygame.transform.scale(self.animation_right[i], (new_size, new_size))
             self.animation_left[i] = pygame.transform.scale(self.animation_left[i], (new_size, new_size))
-    
+
     def set_image(self, direction, step):
         """
         Set image of the player according to current situation
@@ -248,7 +248,9 @@ class NPC(GameObject):
     directory -> the file folder which stores the NPC data
     dialogue -> a list of the dialogue strings of the NPC
     key -> a dictionary storing the checkpoint items of the player to advance dialogue
-    index_position -> a tracker to track what point the character is through their dialogue"""
+    index_position -> a tracker to track what point the character is through their dialogue
+    map -> GameMap object with all required objects to play the game
+    view -> View object with required objects to display visuals and play audio """
 
     def __init__(self,x,y, directory):
         """Set the starting values of the attributes"""
@@ -275,30 +277,35 @@ class NPC(GameObject):
         self.image = pygame.transform.scale(self.image, (new_size, new_size))
         self.original_image = pygame.transform.scale(self.original_image, (new_size, new_size))
         self.rect.size = (new_size, new_size)
-        
-    def update_dialogue(self):
+
+    def update_dialogue(self,audio_engine, view):
         """A method which handels loading the dialogue lines of the NPC"""
 
         #if there is a checkpoint needed for the next line of dialogue
-        if index_position in self.key.keys():
+        if self.index_position in self.key.keys():
             #if the player has achieved the checkpoint
-            if player.inventory.contains(self.key[index_position]):
+            if player.inventory.contains(self.key[self.index_position]):
                 #print the next position
                 self.index_position += 1
-                say_line(self.dialogue[self.index_position])
+                view.say_and_display(self.dialogue[self.index_position],audio_engine)
+                #say_line(self.dialogue[self.index_position])
 
             #if the player has not achieved the checkpoint
             else:
                 #repreate the previous line
-                say_line(self.dialogue[self.index_position])
+                view.say_and_display(self.dialogue[self.index_position],audio_engine)
 
         #if it is the first or last dialogue line
-        elif index_position == 0 or index_position == len(dialogue)-1:
+        elif self.index_position == len(self.dialogue)-1:
             #say the first line of dialogue
-            say_line(self.dialogue[self.index_position])
+            view.say_and_display(self.dialogue[self.index_position],audio_engine)
+
+        elif self.index_position == 0:
+            view.say_and_display(self.dialogue[self.index_position],audio_engine)
+            self.index_position +=1
 
         #if there is a normal dialogue line
         else:
             #say the next line of dialogue
+            view.say_and_display(self.dialogue[self.index_position],audio_engine)
             self.index_position += 1
-            say_line(self.dialogue[self.index_position])

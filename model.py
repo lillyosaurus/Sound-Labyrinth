@@ -42,9 +42,11 @@ class Model:
 
         self.ping_delay = 600
         self.footstep_delay = 100
+        self.say_delay = 2000
         self.current_time = 0
         self.previous_time = 0
         self.footstep_previous_time = 0
+        self.NPC_previous_say = 0
         self.footstep_count = 0
         self.animation_step = 0
 
@@ -52,6 +54,7 @@ class Model:
         self.turned_on_NPC = None
         self.wall_transparency = 0
         self.NPC_transparency = 0
+        self.NPC_interact = False
 
         self.audio_loop = True
         self.show_home_screen = True
@@ -60,10 +63,20 @@ class Model:
         self.game_on = False
         self.run = True
 
+        self.init_audio_engine()
+
     def footstep_audio(self):
         """Call function to play footstep sound
         """
         self.view.play_footsteps(self.current_time,self.footstep_previous_time,self.footstep_delay,self.footstep_count)
+
+    def init_audio_engine(self):
+        """Initializes audio engine for text to speech
+        """
+        self.audio_engine = pyttsx3.init()
+        self.audio_engine.setProperty('rate',200)
+        self.audio_engine.setProperty('rate',0.9)
+        self.audio_engine.setProperty('voice', 'english+f1')
 
     def wall_collision_ping(self,direction):
         """Pings wall when a player runs into it
@@ -83,6 +96,7 @@ class Model:
             if dist != None:
                 self.turned_on_wall = ping_check[0]
                 self.wall_transparency = 30
+                self.view.play_echo(round(dist)+2,direction, self.view.audio.hollow_sound)
 
     def NPC_collision_ping(self,direction):
         """Pings NPC when a player runs into it
@@ -93,11 +107,13 @@ class Model:
         """
         ping_check = self.map.ping_from_player(direction,1)
         dist = ping_check[1]
-        if self.current_time - self.previous_time >= self.ping_delay:
+        if self.current_time - self.previous_time >= self.ping_delay+2000:
             self.previous_time = self.current_time
             if dist != None:
                 self.turned_on_NPC = ping_check[0]
                 self.NPC_transparency = 30
+                self.view.play_echo(round(dist)+2,direction, self.view.audio.hollow_sound)
+                self.NPC_interact = True
 
     def process_ping(self,direction,sight_range):
         """Processes ping
@@ -116,7 +132,7 @@ class Model:
             if self.current_time - self.previous_time >= self.ping_delay:
                 self.previous_time = self.current_time
                 if dist != None:
-                    self.view.play_echo(round(dist),direction, self.view.audio.hollow_sound)
+                    self.view.play_echo(round(dist),direction, self.view.audio.ping_sound)
                     self.turned_on_wall = ping_check[0]
                     self.wall_transparency = 30
                     self.turned_on_NPC = ping_check[0]
@@ -179,32 +195,25 @@ class Model:
         #Create clock object
         clock = pygame.time.Clock()
 
-        #Initializes audio engine for text to speech
-        audio_engine = pyttsx3.init()
-        audio_engine.setProperty('rate',200)
-        audio_engine.setProperty('rate',0.9)
-        audio_engine.setProperty('voice', 'english+f1')
-
-
         while self.run:
 
             #Navigates home, instruction and credit pages
             if self.show_home_screen == True:
                 self.view.update_screen('home_screen')
                 if self.audio_loop == True:
-                    #self.view.audio.home_screen_audio(audio_engine)
+                    #self.view.audio.home_screen_audio(self.audio_engine)
                     self.audio_loop = False
                 self.check_for_change_screens(instruct=True, home=False, cred=True, game=True)
             elif self.show_instructions == True:
                 self.view.update_screen('instructions')
                 if self.audio_loop == True:
-                    #self.view.audio.instruction_page_audio(audio_engine)
+                    #self.view.audio.instruction_page_audio(self.audio_engine)
                     self.audio_loop = False
                 self.check_for_change_screens(instruct=False, home=True, cred=True, game=True)
             elif self.show_credits == True:
                 self.view.update_screen('credits')
                 if self.audio_loop == True:
-                    #self.view.audio.credits_page_audio(audio_engine)
+                    #self.view.audio.credits_page_audio(self.audio_engine)
                     self.audio_loop = False
                 self.check_for_change_screens(instruct=False, home=True, cred=False, game=False)
 
@@ -303,17 +312,26 @@ class Model:
 
                 if self.turned_on_wall != None and self.wall_transparency >=0:
                     self.turned_on_wall.set_transparency(1 + self.wall_transparency * 8)
-                    #self.wall_transparency -= 1
+                    self.wall_transparency -= 1
                 if self.turned_on_NPC != None and self.NPC_transparency >=0:
                     self.turned_on_NPC.set_transparency(1 + self.NPC_transparency * 8)
-                    #self.NPC_transparency -= 1
+                    self.NPC_transparency -= 1
 
                 #update visuals
-                self.view.update_screen('game')
+                if self.NPC_interact == False:
+                    self.view.update_screen('game')
+
+                if self.NPC_interact == True:
+                    self.NPC_previous_say = self.current_time
+                    self.turned_on_NPC.update_dialogue(self.audio_engine, self.view)
+                    #self.view.say_and_display('string to say and display',self.audio_engine)
+                    self.NPC_interact = False
+
+
+
                 if self.view.visual.game_on == False:
                     self.game_on = False
                     self.run = False
-
 
 if __name__ == "__main__":
     pygame.init()

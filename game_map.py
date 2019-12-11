@@ -31,7 +31,7 @@ class GameMap():
     map -> map of the game in nested list
     pixel_size -> length of each block that builds the game on the screen. All images are scaled to this size.
     wall_group -> pygame Group that includes all the Wall object in the game
-    wall_list -> list of all Wall objects 
+    wall_list -> list of all Wall objects
     player -> Player object
     """
 
@@ -45,15 +45,15 @@ class GameMap():
         self.pixel_size = 128
         self.wall_group = pygame.sprite.Group()
         self.NPC_group = pygame.sprite.Group()
-        
+
         #a list of the NPCs and their directories
         self.NPC_dict = {4:"reaper"}
-        
+
         self.wall_list = self.get_walls()
         self.NPC_list = self.get_NPCs()
         self.player = self.get_player()
         self.player.speed = self.pixel_size/16
-        
+
 
     def get_walls(self):
         """
@@ -101,7 +101,7 @@ class GameMap():
             y += self.pixel_size
 
         return player
-    
+
     def get_NPCs(self):
         """
         Figure out the location of each wall and creates Wall objects.
@@ -146,14 +146,14 @@ class GameMap():
 
     def ping_from_player(self, direction, limit):
         """
-        Create a Ping object to check the distance between Player and closest Wall or NPC object in range. 
+        Create a Ping object to check the distance between Player and closest Wall or NPC object in range.
 
         Arguments:
         direction-> the direction to send the Ping object
         limit -> limit in blocks the maximum distance ping can travel
 
         Return:
-        [int, Object] -> returns the distance in int, and the Colliding wall or NPC object. Returns [None, None] if nothing was hit. 
+        [int, Object] -> returns the distance in int, and the Colliding wall or NPC object. Returns [None, None] if nothing was hit.
         """
         ping = game_object.Ping(self.player)
         pixel_limit = self.pixel_size * limit
@@ -179,7 +179,7 @@ class GameMap():
         for i in range(pixel_limit):
             ping.rect.move_ip(x, y)
             ping_wall = ping.collision_group(self.wall_group)
-            
+
             if ping_wall != None:
                 blocks_away = (i + offset + self.pixel_size/2)/self.pixel_size
                 ping_wall.image.set_alpha(255)

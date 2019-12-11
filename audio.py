@@ -11,10 +11,13 @@ class Audio(object):
     Attributes:
     volume_to_distance -> list object with floats from 0 to 1 indicating volume
         to play a sound at
+    footstep_volume -> float from 0 to 1 indicating volume to play footstep sound at
     """
     def __init__(self):
         """Initalize the Audio class with default variable values"""
-        self.volume_to_distance = [1,.6,.1]
+        self.volume_to_distance = [.6,.3,.1]
+        self.footstep_volume = .1
+
         self.get_audio_files()
 
     def get_audio_files(self):
@@ -27,8 +30,8 @@ class Audio(object):
                 form the sound of footsteps
         Return values: None
         """
-        self.ping_sound = pygame.mixer.Sound("Sounds/ping_2.wav")
-        self.hollow_sound = pygame.mixer.Sound("Sounds/drop.wav")
+        self.ping_sound = pygame.mixer.Sound("Sounds/drop.wav")
+        self.hollow_sound = pygame.mixer.Sound("Sounds/bang.wav")
         self.stone_step = []
         for i in range(1,7):
             self.stone_step.append(pygame.mixer.Sound("Sounds/stoneSteps/stone"+str(i)+".ogg"))
@@ -98,7 +101,8 @@ class Audio(object):
         Return values: None
         """
         step = self.stone_step[count]
-        step.play()
+        channel = step.play()
+        channel.set_volume(self.footstep_volume,self.footstep_volume)
 
     def home_screen_audio(self,audio_engine):
         """Audio for home screen

@@ -1,5 +1,6 @@
 import audio
 import visual
+import pygame
 
 class View:
     """
@@ -101,8 +102,13 @@ class View:
             volume and volume_to_distance
         Return values: None
         """
+        self.visual.clear_screen()
+        self.display_correct_screen('game')
+        self.visual.draw_paragraph(string,32,pygame.Rect((self.visual.margin, self.visual.margin-24, self.visual.width - self.visual.margin*2, 160)))
+        self.visual.close_screen()
+        self.visual.refresh_screen()
         self.audio.string_to_speach(string,audio_engine)
-        self.draw_paragraph(string,32,pygame.Rect((self.margin, self.margin, self.width - self.margin*2, 300)))
+        print('trying to display screen')
 
 if __name__ == "__main__":
     pass
