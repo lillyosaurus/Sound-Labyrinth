@@ -100,7 +100,29 @@ class Audio(object):
         step = self.stone_step[count]
         step.play()
 
+    def home_screen_audio(self,audio_engine):
+        """Audio for home screen
+        """
+        self.string_to_speach('Sound Labyrinth',audio_engine)
+        self.string_to_speach('Image of Footsteps',audio_engine)
+        self.string_to_speach('Created for Software Design in the Fall of 2019 by Kyle Bertram, SeungU Lyu and Tim Novak ',audio_engine)
+        self.string_to_speach('Press I for Instructions, Press C for credits, Press Space to play', audio_engine)
 
+    def instruction_page_audio(self,audio_engine):
+        """Audio for instruction page
+        """
+        self.string_to_speach('The Game',audio_engine)
+        self.string_to_speach("You find yourself trapped in the labyrinth, an endless maze between the world of the living and the dead. A place where souls are kept if they still have unfinished business, ties to the world or regrets for what they've done. In order to resolve your past life, you must now learn to help the other trapped souls move on. Only then can you yourself pass on to the afterlife.",audio_engine)
+        self.string_to_speach('In the game you will navigate using echolocation, and you can see three meters in any direction. Use the A S W D keys to move in a direction, and use the arrow keys to ping in a direction',audio_engine)
+        self.string_to_speach('Press C for credits, Press H to return to the Home screen, Press Space to play', audio_engine)
+
+    def credits_page_audio(self,audio_engine):
+        """Audio for credits page
+        """
+        self.string_to_speach('About Sound Labyrinth',audio_engine)
+        self.string_to_speach('Sound Labyrinth is an accessible videogame which is designed to provide the same experience to people with a range of sensory abilities. People with a visual impairment can navigate the game via audio input, while people who have hearing impairments can navigate with visual input.',audio_engine)
+        self.string_to_speach('This game was created by Kyle Bertram, SeungU Lyu and Tim Novak as the final project for Software Design at Olin College of Engineering.',audio_engine)
+        self.string_to_speach('Press H to return to the home screen', audio_engine)
 
 
 if __name__ == "__main__":

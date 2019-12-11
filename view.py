@@ -70,14 +70,16 @@ class View:
         """
         self.audio.echo(distance,direction,sound)
 
+
+
     def play_footsteps(self,current_time,previous_time,delay,count):
         """Plays footstep audio
 
         Keyword arguments:
-            current_time -> integer with current time in miliseconds
+            current_time -> integer with current time in milliseconds
             previous_time -> integer with previous time that footstep audio was
-                played in miliseconds
-            delay -> integer indicating miliseconds to wait between playing
+                played in milliseconds
+            delay -> integer indicating milliseconds to wait between playing
                 footstep audio
             count -> integer referencing which footstep audio file to play
         Return values: None
@@ -89,6 +91,18 @@ class View:
                 self.audio.footstep_audio(count)
             else:
                 count = 0
+
+    def say_and_display(self,string,audio_engine):
+        """Displays string at the top of the page and reads the text aloud
+
+        Keyword arguments:
+            string -> string to say and displays
+            audio_engine -> engine to speak text that can have variables like rate,
+            volume and volume_to_distance
+        Return values: None
+        """
+        self.audio.string_to_speach(string,audio_engine)
+        self.draw_paragraph(string,32,pygame.Rect((self.margin, self.margin, self.width - self.margin*2, 300)))
 
 if __name__ == "__main__":
     pass

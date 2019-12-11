@@ -67,7 +67,7 @@ class VisualView():
 
     def refresh_screen(self):
         """
-        Refresh the screen
+        Refresh the screenStart
         """
         pygame.display.flip()
 
