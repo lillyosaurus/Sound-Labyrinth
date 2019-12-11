@@ -20,9 +20,6 @@ Sound labrynth relies on several packages please run the following commands in a
 
 
 ### Download program
-
-<span class="image left"><img src="{{ "/images/pic04.jpg" | relative_url }}" alt="" /></span>
-
 Sound labrynth is a an open source game. This means that all of the code for the game can be found on our github repository. To download our program for running  please go to our github repository and download the game files by using the green clone or download button on the right hand side of the page.
 
 1. Navigate to [our github link where you can download the program](https://github.com/sd19fall/Sound-Labyrinth)
