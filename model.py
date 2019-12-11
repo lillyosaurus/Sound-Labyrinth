@@ -10,12 +10,16 @@ import pyttsx3
 class Model:
 
     def __init__(self):
-        #the map of the game world which stores the objects
+        """Initalize the Model class with default variable values"""
         self.map = gm.GameMap()
         self.view = view.View(self.map)
         self.controller = c.Controller()
         self.ping_delay = 600
         self.previous_time = 0
+        self.footstep_delay = 100
+        self.footstep_previous_time = 0
+        self.footstep_count = 0
+        self.current_time = 0
         self.turned_on_wall = None
         self.turned_on_NPC = None
         self.wall_transparency = 0
@@ -28,45 +32,36 @@ class Model:
         self.game_on = False
         self.run = True
 
-    def wall_collision_ping(self,direction,current_time):
-        print('going the direction')
+    def footstep_audio(self):
+        self.view.play_footsteps(self.current_time,self.footstep_previous_time,self.footstep_delay,self.footstep_count)
+
+    def wall_collision_ping(self,direction):
         ping_check = self.map.ping_from_player(direction,1)
         dist = ping_check[1]
-        if current_time - self.previous_time >= self.ping_delay:
-            print('updating_time')
-            print(dist)
-            self.previous_time = current_time
+        if self.current_time - self.previous_time >= self.ping_delay:
+            self.previous_time = self.current_time
             if dist != None:
-                print('performing action')
                 #self.view.play_echo(round(dist),direction, self.view.audio.hollow_sound)
                 self.turned_on_wall = ping_check[0]
                 self.wall_transparency = 30
 
-    def NPC_collision_ping(self,direction,current_time):
-        print('going the direction')
+    def NPC_collision_ping(self,direction):
         ping_check = self.map.ping_from_player(direction,1)
         dist = ping_check[1]
-        if current_time - self.previous_time >= self.ping_delay:
-            print('updating_time')
-            print(dist)
-            self.previous_time = current_time
+        if self.current_time - self.previous_time >= self.ping_delay:
+            self.previous_time = self.current_time
             if dist != None:
-                print('performing action')
                 #self.view.play_echo(round(dist),direction, self.view.audio.hollow_sound)
                 self.turned_on_NPC = ping_check[0]
                 self.NPC_transparency = 30
 
-    def process_ping(self,direction,sight_range,current_time):
+    def process_ping(self,direction,sight_range):
         if self.controller.ping_keys[direction]:
-            print('going the direction')
             ping_check = self.map.ping_from_player(direction,sight_range)
             dist = ping_check[1]
-            if current_time - self.previous_time >= self.ping_delay:
-                print('updating_time')
-                print(dist)
-                self.previous_time = current_time
+            if self.current_time - self.previous_time >= self.ping_delay:
+                self.previous_time = self.current_time
                 if dist != None:
-                    print('performing action')
                     self.view.play_echo(round(dist),direction, self.view.audio.hollow_sound)
                     self.turned_on_wall = ping_check[0]
                     self.wall_transparency = 30
@@ -98,10 +93,7 @@ class Model:
         #EXPLAIN
         clock = pygame.time.Clock()
         #Initializes current time object
-        current_time = 0
         animation_step = 0
-        audio_loop = True
-        instruction_loop = True
         audio_engine = pyttsx3.init()
         audio_engine.setProperty('rate',200)
         audio_engine.setProperty('rate',0.9)
@@ -111,10 +103,10 @@ class Model:
             if self.show_home_screen == True:
                 self.view.update_screen('home_screen')
                 if self.audio_loop == True:
-                    self.view.audio.string_to_speach('Sound Labyrinth',audio_engine)
-                    self.view.audio.string_to_speach('Image of Footsteps',audio_engine)
-                    self.view.audio.string_to_speach('Created for Software Design in the Fall of 2019 by Kyle Bertram, SeungU Lyu and Tim Novak ',audio_engine)
-                    self.view.audio.string_to_speach('Press I for Instructions, Press C for credits, Press Space to play', audio_engine)
+                    # self.view.audio.string_to_speach('Sound Labyrinth',audio_engine)
+                    # self.view.audio.string_to_speach('Image of Footsteps',audio_engine)
+                    # self.view.audio.string_to_speach('Created for Software Design in the Fall of 2019 by Kyle Bertram, SeungU Lyu and Tim Novak ',audio_engine)
+                    # self.view.audio.string_to_speach('Press I for Instructions, Press C for credits, Press Space to play', audio_engine)
                     self.audio_loop = False
                 self.controller.read_input()
                 if self.controller.hs_keys['I']:
@@ -156,8 +148,8 @@ class Model:
                     self.run = False
 
             while self.game_on == True:
-                current_time = pygame.time.get_ticks()
-                #print(current_time)
+                self.current_time = pygame.time.get_ticks()
+                #printself.current_time)
                 #forces the frames per second (fps) of the game to be equal to 60 fps
                 clock.tick(60)
 
@@ -170,10 +162,10 @@ class Model:
                     self.controller.read_input()
 
                     #process controller inputs for pings
-                    self.process_ping('front',3,current_time)
-                    self.process_ping('back',3,current_time)
-                    self.process_ping('right',3,current_time)
-                    self.process_ping('left',3,current_time)
+                    self.process_ping('front',3)
+                    self.process_ping('back',3)
+                    self.process_ping('right',3)
+                    self.process_ping('left',3)
 
                 #process controller inputs for moving and interacting
                 speed = self.map.player.speed
@@ -184,73 +176,72 @@ class Model:
                     self.map.player.rect.move_ip(0,-speed)
                     if self.map.player_wall_collision() != None:
                             self.map.player.rect.move_ip(0,speed)
-                            self.wall_collision_ping('front',current_time)
+                            self.wall_collision_ping('front')
                     elif self.map.player_NPC_collision() != None:
                             self.map.player.rect.move_ip(0,speed)
-                            self.NPC_collision_ping('front',current_time)
+                            self.NPC_collision_ping('front')
                     else:
                         animation_step += 1
                         if animation_step % 2 == 0:
-                            print(animation_step)
                             self.map.player.set_image('north',int(animation_step/2))
+                            self.footstep_audio()
+
                     """#if the player runs into an npc cause the player to interact
                     if self.map.player_NPC_collision() != None:
                             self.map.player.rect.move_ip(0,speed)
-                            self.NPC_collision_ping('front',current_time)"""
+                            self.NPC_collision_ping('front')"""
 
                 elif self.controller.move_keys['south']:
 
                     self.map.player.rect.move_ip(0,speed)
                     if self.map.player_wall_collision() != None:
                             self.map.player.rect.move_ip(0,-speed)
-                            self.wall_collision_ping('back',current_time)
+                            self.wall_collision_ping('back')
                     elif self.map.player_NPC_collision() != None:
                             self.map.player.rect.move_ip(0,speed)
-                            self.NPC_collision_ping('back',current_time)
+                            self.NPC_collision_ping('back')
                     else:
                         animation_step += 1
                         if animation_step % 2 == 0:
-                            print(animation_step)
                             self.map.player.set_image('south',int(animation_step/2))
+                            self.footstep_audio()
 
                 elif self.controller.move_keys['west']:
 
                     self.map.player.rect.move_ip(-speed,0)
                     if self.map.player_wall_collision() != None:
                             self.map.player.rect.move_ip(speed,0)
-                            self.wall_collision_ping('left',current_time)
+                            self.wall_collision_ping('left')
                     elif self.map.player_NPC_collision() != None:
                             self.map.player.rect.move_ip(0,speed)
-                            self.NPC_collision_ping('left',current_time)
+                            self.NPC_collision_ping('left')
                     else:
                         animation_step += 1
                         if animation_step % 2 == 0:
-                            print(animation_step)
                             self.map.player.set_image('west',int(animation_step/2))
+                            self.footstep_audio()
 
                 elif self.controller.move_keys['east']:
 
                     self.map.player.rect.move_ip(speed,0)
                     if self.map.player_wall_collision() != None:
                             self.map.player.rect.move_ip(-speed,0)
-                            self.wall_collision_ping('right',current_time)
+                            self.wall_collision_ping('right')
                     elif self.map.player_NPC_collision() != None:
                             self.map.player.rect.move_ip(0,speed)
-                            self.NPC_collision_ping('right',current_time)
+                            self.NPC_collision_ping('right')
                     else:
                         animation_step += 1
                         if animation_step % 2 == 0:
-                            print(animation_step)
                             self.map.player.set_image('east',int(animation_step/2))
+                            self.footstep_audio()
 
                 if self.turned_on_wall != None and self.wall_transparency >=0:
                     self.turned_on_wall.set_transparency(1 + self.wall_transparency * 8)
                     self.wall_transparency -= 1
-                    print('reduce wall transparency' + str(self.NPC_transparency))
                 if self.turned_on_NPC != None and self.NPC_transparency >=0:
                     self.turned_on_NPC.set_transparency(1 + self.NPC_transparency * 8)
                     self.NPC_transparency -= 1
-                    print('reduce NPC transparency' + str(self.NPC_transparency))
                 #update visuals
                 self.view.update_screen('game')
                 if self.view.visual.game_on == False:
