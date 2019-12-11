@@ -1,7 +1,7 @@
 import pygame
-import pyttsx3  # will need people to import this and libespeak1
-                # pip install pyttsx3
-                # sudo apt install libespeak1
+import pyttsx3
+# pip install pyttsx3
+# sudo apt install libespeak1
 from time import sleep
 
 class Audio(object):
