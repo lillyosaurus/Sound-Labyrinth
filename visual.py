@@ -19,7 +19,7 @@ class VisualView():
 
     def __init__(self, gamemap):
         """
-        Initializes VisualView object
+        Initalize the Audio class with default variable values
 
         gamemap: GameMap object
         """
