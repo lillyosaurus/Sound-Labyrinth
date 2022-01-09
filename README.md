@@ -1,5 +1,5 @@
 # Sound Labyrinth
-This is the content for the sound Labyrinth website. Please [go to our website](https://sd19fall.github.io/Sound-Labyrinth/) to learn more about our project.
+This is the content for the sound Labyrinth website. Please [go to our website](https://lillyosaurus.github.io/Sound-Labyrinth/) to learn more about our project.
 
 The main content for the game SOund Labyrinth can be found by visiting [our github repository](https://github.com/sd19fall/Sound-Labyrinth)
 
